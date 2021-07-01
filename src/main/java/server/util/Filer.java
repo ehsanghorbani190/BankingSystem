@@ -19,7 +19,7 @@ class Filer<Type> {
             File temp = new File(path);
             if (!temp.exists())
                 temp.mkdir();
-            file = new File(path, object.hashCode() + "." + object.getClass().getSimpleName());
+            file = new File(path, String.valueOf(object.hashCode()));
             out = new ObjectOutputStream(new FileOutputStream(file, true));
             in = new ObjectInputStream(new FileInputStream(file));
             obj = object;
@@ -53,7 +53,7 @@ class Filer<Type> {
     public void update(Type object) {
         try {
             file.delete();
-            file = new File(path, object.hashCode() + "." + object.getClass().getSimpleName());
+            file = new File(path, String.valueOf(object.hashCode()));
             resetOut();
             resetIn();
             obj = object;
