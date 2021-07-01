@@ -38,6 +38,8 @@ class Filer<Type> {
         }
     }
 
+    //We prove that the object is always Type , so we suppress the warning
+    @SuppressWarnings("unchecked")
     public Type read() {
         try {
             Object temp = in.readObject();
