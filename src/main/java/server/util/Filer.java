@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-public class Filer<Type> {
+public class Filer<Type extends Identifiable> {
     private File file;
     private Type obj;
     private String path;
@@ -20,7 +20,7 @@ public class Filer<Type> {
             File temp = new File(path);
             if (!temp.exists())
                 temp.mkdir();
-            file = new File(path, String.valueOf(object.hashCode()) + "." + object.getClass().getSimpleName());
+            file = new File(path, object.getUniqueID() + "." + object.getClass().getSimpleName());
             out = new ObjectOutputStream(new FileOutputStream(file, true));
             in = new ObjectInputStream(new FileInputStream(file));
             obj = object;
@@ -29,9 +29,25 @@ public class Filer<Type> {
         }
     }
 
+    public Filer(String ID, Class<?> type) {
+        try {
+            path = type.getSimpleName() + "s";
+            file = new File(path, ID + "." + type.getClass().getSimpleName());
+            if (file.exists()) {
+                out = new ObjectOutputStream(new FileOutputStream(file, true));
+                in = new ObjectInputStream(new FileInputStream(file));
+                obj = read();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
     public void write() {
         try {
-            out.writeObject(obj);
+            if (!file.exists())
+                out.writeObject(obj);
             resetOut();
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -53,7 +69,7 @@ public class Filer<Type> {
     public void update(Type object) {
         try {
             file.delete();
-            file = new File(path, String.valueOf(object.hashCode()) + "." + object.getClass().getSimpleName());
+            file = new File(path, String.valueOf(object.getUniqueID() + "." + object.getClass().getSimpleName()));
             resetOut();
             resetIn();
             obj = object;
