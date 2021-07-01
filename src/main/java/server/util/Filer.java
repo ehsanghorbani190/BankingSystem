@@ -68,6 +68,9 @@ class Filer<Type> {
         return file.exists();
     }
 
+    public boolean delete() {
+        return file.delete();
+    }
     public void resetIn() {
         try {
             in = new ObjectInputStream(new FileInputStream(file));
