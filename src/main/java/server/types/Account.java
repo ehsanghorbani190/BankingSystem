@@ -13,14 +13,6 @@ public class Account implements Serializable {
     private User owner;
     private String alias;
 
-    /**
-     * @param id
-     * @param password
-     * @param balance
-     * @param isFavorite
-     * @param alias
-     * @throws NoSuchAlgorithmException
-     */
     public Account(User owner, String password, boolean isFavorite, String alias) throws NoSuchAlgorithmException {
         this.balance = 0;
         this.isFavorite = isFavorite;
@@ -67,5 +59,21 @@ public class Account implements Serializable {
     public String getPasswordHash() {
         return passwordHash;
     }
-
+    
+   public boolean getFavorite() {
+       return isFavorite;
+   }
+   
+   /**
+    * @param isFavorite the isFavorite to set
+    */
+   public void setFavorite(boolean isFavorite) {
+       this.isFavorite = isFavorite;
+   }
+   /**
+    * @param alias the alias to set
+    */
+   public void setAlias(String alias) {
+       this.alias = alias;
+   }
 }
