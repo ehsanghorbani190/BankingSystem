@@ -1,12 +1,12 @@
-package main.java.server.types;
+package server.types;
 
 import java.io.Serializable;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
-import main.java.server.util.Filer;
 
-class Account implements Serializable {
+public class Account implements Serializable {
     private String id, passwordHash;
     private long balance;
     private boolean isFavorite;
@@ -19,8 +19,9 @@ class Account implements Serializable {
      * @param balance
      * @param isFavorite
      * @param alias
+     * @throws NoSuchAlgorithmException
      */
-    public Account(User owner, String password, boolean isFavorite, String alias) {
+    public Account(User owner, String password, boolean isFavorite, String alias) throws NoSuchAlgorithmException {
         this.balance = 0;
         this.isFavorite = isFavorite;
         this.alias = alias;
@@ -67,7 +68,4 @@ class Account implements Serializable {
         return passwordHash;
     }
 
-    public void save(){
-        Filer<Account> filer = new Filer<Account>();
-    }
 }

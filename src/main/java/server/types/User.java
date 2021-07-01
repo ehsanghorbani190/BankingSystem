@@ -1,10 +1,11 @@
-package main.java.server.types;
+package server.types;
  
 import java.io.Serializable;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
-class User implements Serializable {
+public class User implements Serializable {
     private String melliCode, name, passwordHash, email, phone;
     private ArrayList<Account> accounts;
 
@@ -14,8 +15,9 @@ class User implements Serializable {
      * @param password
      * @param email
      * @param phone
+     * @throws NoSuchAlgorithmException
      */
-    public User(String melliCode, String name, String password, String email, String phone) {
+    public User(String melliCode, String name, String password, String email, String phone) throws NoSuchAlgorithmException {
         this.melliCode = melliCode;
         this.name = name;
         this.email = email;
