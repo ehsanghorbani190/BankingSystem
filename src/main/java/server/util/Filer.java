@@ -1,4 +1,4 @@
-package main.java.server.util;
+package server.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,23 +7,23 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-class Filer<Type> {
+public class Filer<Type> {
     private File file;
     private Type obj;
     private String path;
     private ObjectOutputStream out;
     private ObjectInputStream in;
 
-    public Filer(String path, Type object) {
+    public Filer(Type object) {
         try {
+            path = object.getClass().getSimpleName() + "s";
             File temp = new File(path);
             if (!temp.exists())
                 temp.mkdir();
-            file = new File(path, String.valueOf(object.hashCode()));
+            file = new File(path, String.valueOf(object.hashCode()) + "." + object.getClass().getSimpleName());
             out = new ObjectOutputStream(new FileOutputStream(file, true));
             in = new ObjectInputStream(new FileInputStream(file));
             obj = object;
-            this.path = path;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -38,7 +38,7 @@ class Filer<Type> {
         }
     }
 
-    //We prove that the object is always Type , so we suppress the warning
+    // We prove that the object is always Type , so we suppress the warning
     @SuppressWarnings("unchecked")
     public Type read() {
         try {
@@ -53,7 +53,7 @@ class Filer<Type> {
     public void update(Type object) {
         try {
             file.delete();
-            file = new File(path, String.valueOf(object.hashCode()));
+            file = new File(path, String.valueOf(object.hashCode()) + "." + object.getClass().getSimpleName());
             resetOut();
             resetIn();
             obj = object;
@@ -71,6 +71,7 @@ class Filer<Type> {
     public boolean delete() {
         return file.delete();
     }
+
     public void resetIn() {
         try {
             in = new ObjectInputStream(new FileInputStream(file));
