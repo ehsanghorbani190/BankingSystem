@@ -137,7 +137,7 @@ public class User implements Serializable, Identifiable {
     }
 
     public boolean transfer(Account from, Account to, long val) {
-        from.transfer(to, val);
+        return from.transfer(to, val);
     }
 
 }
