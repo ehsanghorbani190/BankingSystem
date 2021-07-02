@@ -44,6 +44,7 @@ public class Account implements Identifiable {
             return hash.equals(passwordHash);
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
 
     }
