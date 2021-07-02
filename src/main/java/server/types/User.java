@@ -116,7 +116,7 @@ public class User implements Serializable, Identifiable {
         return melliCode;
     }
 
-    public void openAccount(String password, boolean isFavorite, String alias) {
+    public void openAccount(String password, boolean isFavorite, String alias) throws NoSuchAlgorithmException {
         accounts.add(new Account(this, password, isFavorite, alias));
     }
 
