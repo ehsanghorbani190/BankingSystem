@@ -7,7 +7,7 @@ import server.util.Filer;
 import server.util.Identifiable;
 
 public class Account implements Identifiable {
-    private final String id;
+    private String id;
     private String passwordHash;
     private long balance;
     private boolean isFavorite;

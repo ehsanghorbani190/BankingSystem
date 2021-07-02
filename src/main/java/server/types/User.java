@@ -7,7 +7,7 @@ import server.util.Filer;
 import server.util.Identifiable;
 
 public class User implements Identifiable {
-    private final String melliCode;
+    private String melliCode;
     private String name, passwordHash, email, phone;
     private ArrayList<Account> accounts, fAccounts;
 
