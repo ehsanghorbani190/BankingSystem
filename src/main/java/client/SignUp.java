@@ -1,6 +1,9 @@
 package client;
 
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -8,21 +11,22 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 public class SignUp
 {
@@ -61,7 +65,7 @@ public class SignUp
 
 
         Button bt = new Button();
-        InputStream input = new FileInputStream("C:\\Users\\imen oardazesh\\IdeaProjects\\BankingSystem\\src\\sample\\button3.jpeg");
+        InputStream input = getClass().getResourceAsStream("./icons/button3.jpeg");
         Image background = new Image(input);
         bt.setBackground(new Background(new BackgroundImage(background , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,BackgroundSize.DEFAULT)));
         bt.setPadding(new Insets(10,50,10,50));
@@ -87,7 +91,7 @@ public class SignUp
         vb.setLayoutY(90);
         vb.setSpacing(-11);
 
-        InputStream input2 = new FileInputStream("C:\\Users\\imen oardazesh\\IdeaProjects\\BankingSystem\\src\\sample\\back6.png");
+        InputStream input2 = getClass().getResourceAsStream("./pics/back6.png");
         Image background2 = new Image(input2);
         ImageView backgroundView = new ImageView(background2);
         backgroundView.setLayoutX(0);

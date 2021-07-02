@@ -37,10 +37,15 @@ public class Account implements Identifiable {
     }
 
     public boolean login(String password) {
-        MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-        messageDigest.update(password.getBytes());
-        String hash = new String(messageDigest.digest());
-        return hash.equals(passwordHash);
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest.update(password.getBytes());
+            String hash = new String(messageDigest.digest());
+            return hash.equals(passwordHash);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     // NOTE Setters

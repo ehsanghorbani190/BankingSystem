@@ -1,6 +1,9 @@
 package client;
 
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -9,23 +12,21 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-
 
 public class UserPanel
 {
     UserPanel(Stage primaryStage) throws FileNotFoundException {
         Group root = new Group();
-        InputStream input = new FileInputStream("src\\main\\java\\client\\background7.jpg");
+        InputStream input = getClass().getResourceAsStream("./pics/background7.jpg");
         Image background = new Image(input);
         ImageView backgroundView = new ImageView(background);
         backgroundView.setLayoutY(0);
@@ -40,7 +41,7 @@ public class UserPanel
 
 
         Button bt1 = new Button("OPEN AN ACCOUNT");
-        InputStream input2 = new FileInputStream("src\\main\\java\\client\\1.png");
+        InputStream input2 = getClass().getResourceAsStream("./icons/1.png");
         Image background2 = new Image(input2);
         bt1.setGraphic(new ImageView(background2));
         bt1.setBackground(new Background(new BackgroundFill(Color.WHITE , CornerRadii.EMPTY , Insets.EMPTY)));
@@ -62,7 +63,7 @@ public class UserPanel
 
 
         Button bt2 = new Button("ACCOUNT INFORMATION");
-        InputStream input3 = new FileInputStream("src\\main\\java\\client\\2.png");
+        InputStream input3 = getClass().getResourceAsStream("./icons/2.png");
         Image background3 = new Image(input3);
         bt2.setGraphic(new ImageView(background3));
         bt2.setBackground(new Background(new BackgroundFill(Color.WHITE , CornerRadii.EMPTY , Insets.EMPTY)));
@@ -87,7 +88,7 @@ public class UserPanel
 
 
         Button bt3 = new Button("ACCOUNT MANAGEMENT");
-        InputStream input4 = new FileInputStream("src\\main\\java\\client\\3.png");
+        InputStream input4 = getClass().getResourceAsStream("./icons/3.png");
         Image background4 = new Image(input4);
         bt3.setGraphic(new ImageView(background4));
         bt3.setBackground(new Background(new BackgroundFill(Color.WHITE , CornerRadii.EMPTY , Insets.EMPTY)));
@@ -99,7 +100,7 @@ public class UserPanel
 
 
         Button bt4 = new Button("FREQUENTLY USED ACCOUNT");
-        InputStream input5 = new FileInputStream("src\\main\\java\\client\\4.png");
+        InputStream input5 = getClass().getResourceAsStream("./icons/4.png");
         Image background5 = new Image(input5);
         bt4.setGraphic(new ImageView(background5));
         bt4.setBackground(new Background(new BackgroundFill(Color.WHITE , CornerRadii.EMPTY , Insets.EMPTY)));
@@ -124,7 +125,7 @@ public class UserPanel
 
 
         Button bt5 = new Button("MONEY TRANSFER");
-        InputStream input6 = new FileInputStream("src\\main\\java\\client\\5.png");
+        InputStream input6 = getClass().getResourceAsStream("./icons/5.png");
         Image background6 = new Image(input6);
         bt5.setGraphic(new ImageView(background6));
         bt5.setBackground(new Background(new BackgroundFill(Color.WHITE , CornerRadii.EMPTY , Insets.EMPTY)));
@@ -147,7 +148,7 @@ public class UserPanel
 
 
         Button bt6 = new Button("PAYING THE BILL");
-        InputStream input7 = new FileInputStream("src\\main\\java\\client\\6.png");
+        InputStream input7 = getClass().getResourceAsStream("./icons/6.png");
         Image background7 = new Image(input7);
         bt6.setGraphic(new ImageView(background7));
         bt6.setBackground(new Background(new BackgroundFill(Color.WHITE , CornerRadii.EMPTY , Insets.EMPTY)));
@@ -170,7 +171,7 @@ public class UserPanel
         });
 
         Button bt7 = new Button("APPLY FOR A LOAN");
-        InputStream input8 = new FileInputStream("src\\main\\java\\client\\7.png");
+        InputStream input8 = getClass().getResourceAsStream("./icons/7.png");
         Image background8 = new Image(input8);
         bt7.setGraphic(new ImageView(background8));
         bt7.setBackground(new Background(new BackgroundFill(Color.WHITE , CornerRadii.EMPTY , Insets.EMPTY)));
@@ -194,7 +195,7 @@ public class UserPanel
 
 
         Button bt8 = new Button("CLOSE ACCOUNT");
-        InputStream input9 = new FileInputStream("src\\main\\java\\client\\8.png");
+        InputStream input9 = getClass().getResourceAsStream("./icons/8.png");
         Image background9 = new Image(input9);
         bt8.setGraphic(new ImageView(background9));
         bt8.setBackground(new Background(new BackgroundFill(Color.WHITE , CornerRadii.EMPTY , Insets.EMPTY)));

@@ -1,18 +1,23 @@
 package client;
 
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -24,10 +29,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-
 public class PayingTheBill
 {
     PayingTheBill(Stage primaryStage) throws FileNotFoundException {
@@ -35,7 +36,7 @@ public class PayingTheBill
         Group root = new Group();
         Scene scene = new Scene(root);
 
-        InputStream input = new FileInputStream("src\\main\\java\\client\\background7.jpg");
+        InputStream input = getClass().getResourceAsStream("./pics/background7.jpg");
         Image background = new Image(input);
         ImageView backgroundView = new ImageView(background);
         backgroundView.setLayoutY(0);
@@ -94,7 +95,7 @@ public class PayingTheBill
         root.getChildren().add(pCode);
 
         Button ok = new Button();
-        InputStream input3 = new FileInputStream("src\\main\\java\\client\\ok2.png");
+        InputStream input3 = getClass().getResourceAsStream("./icons/okPadding.png");
         Image background3 = new Image(input3);
         ok.setBackground(new Background(new BackgroundImage(background3 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
         ok.setPadding(new Insets(10,15,10,15));
@@ -104,7 +105,7 @@ public class PayingTheBill
 
 
         Button menu = new Button();
-        InputStream input4 = new FileInputStream("src\\main\\java\\client\\mennu.png");
+        InputStream input4 = getClass().getResourceAsStream("./icons/mennu.png");
         Image background4 = new Image(input4);
         menu.setBackground(new Background(new BackgroundImage(background4 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
         menu.setPadding(new Insets(25,15,10,40));
