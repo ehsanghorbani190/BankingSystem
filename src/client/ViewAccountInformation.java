@@ -30,6 +30,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class ViewAccountInformation
 {
@@ -49,9 +50,9 @@ public class ViewAccountInformation
         root.getChildren().add(backgroundView);
 
         Text txt = new Text("ACCOUNT INFORMATION");
-        txt.setLayoutX(60);
+        txt.setLayoutX(50);
         txt.setLayoutY(40);
-        txt.setFont(Font.font("T", FontWeight.LIGHT, FontPosture.ITALIC, 18));
+        txt.setFont(Font.font("T", FontWeight.EXTRA_BOLD, FontPosture.ITALIC, 15));
         txt.setFill(Color.WHITE);
         root.getChildren().add(txt);
 
@@ -71,12 +72,15 @@ public class ViewAccountInformation
         );
         root.getChildren().add(rect);
 
-
+/*
         TableView table = new TableView();
 
         TableColumn type = new TableColumn("Account type");
         TableColumn inventory = new TableColumn("Inventory");
         TableColumn lot = new TableColumn("transactions");
+
+        Button bt = new Button("show");
+
 
         table.getColumns().addAll(type, inventory, lot);
         VBox vb = new VBox(table);
@@ -84,14 +88,54 @@ public class ViewAccountInformation
         vb.setPrefHeight(200);
         root.getChildren().add(vb);
 
+ */
+
+
+        Text type = new Text("account type");
+        Text inventory = new Text("Inventory");
+        Text transaction = new Text("transactions");
+
+        type.setLayoutY(120);
+        inventory.setLayoutY(120);
+        transaction.setLayoutY(120);
+        type.setLayoutX(40);
+        inventory.setLayoutX(130);
+        transaction.setLayoutX(200);
+
+        root.getChildren().addAll(type,inventory,transaction);
+
+
+        Rectangle Trect = new Rectangle(80,250);
+        Trect.setTranslateX(35);
+        Trect.setLayoutY(140);
+        Trect.setFill(Color.GRAY);
+        Trect.setStroke(Color.LIGHTBLUE);
+        root.getChildren().add(Trect);
+
+
+        Rectangle Irect = new Rectangle(80,250);
+        Irect.setTranslateX(115);
+        Irect.setLayoutY(140);
+        Irect.setFill(Color.GRAY);
+        Irect.setStroke(Color.LIGHTBLUE);
+        root.getChildren().add(Irect);
+
+
+        Rectangle TRrect = new Rectangle(80,250);
+        TRrect.setTranslateX(195);
+        TRrect.setLayoutY(140);
+        TRrect.setFill(Color.GRAY);
+        TRrect.setStroke(Color.LIGHTBLUE);
+        root.getChildren().add(TRrect);
+
 
         Button menu = new Button();
         InputStream input4 = new FileInputStream("./icons/mennu.png");
         Image background4 = new Image(input4);
         menu.setBackground(new Background(new BackgroundImage(background4 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        menu.setPadding(new Insets(25,15,10,40));
-        menu.setTranslateY(10);
-        menu.setLayoutX(0);
+        menu.setPadding(new Insets(15,10,0,25));
+        menu.setTranslateY(0);
+        menu.setLayoutX(267);
         root.getChildren().add(menu);
         menu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -105,6 +149,8 @@ public class ViewAccountInformation
             }
         });
 
+
+        primaryStage.setTitle("account information");
 
 
         primaryStage.setHeight(480);

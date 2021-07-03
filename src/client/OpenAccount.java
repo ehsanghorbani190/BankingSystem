@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
@@ -50,7 +51,7 @@ public class OpenAccount
         Text txt = new Text("OPEN ACCOUNT");
         txt.setLayoutX(80);
         txt.setLayoutY(40);
-        txt.setFont(Font.font("T", FontWeight.LIGHT, FontPosture.ITALIC, 18));
+        txt.setFont(Font.font("T", FontWeight.EXTRA_BOLD, FontPosture.ITALIC, 18));
         txt.setFill(Color.WHITE);
         root.getChildren().add(txt);
 
@@ -121,12 +122,12 @@ public class OpenAccount
 
 
         Button ok = new Button();
-        InputStream input3 = new FileInputStream("./icons/okPadding.png");
+        InputStream input3 = new FileInputStream("./icons/ok.png");
         Image background3 = new Image(input3);
         ok.setBackground(new Background(new BackgroundImage(background3 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        ok.setPadding(new Insets(10,15,10,15));
+        ok.setPadding(new Insets(10,30,10,40));
         ok.setTranslateY(checkPassFl.getLayoutY()+50);
-        ok.setLayoutX(checkPassFl.getLayoutX()+50);
+        ok.setLayoutX(checkPassFl.getLayoutX()+40);
         root.getChildren().add(ok);
 
 
@@ -134,9 +135,9 @@ public class OpenAccount
         InputStream input4 = new FileInputStream("./icons/mennu.png");
         Image background4 = new Image(input4);
         menu.setBackground(new Background(new BackgroundImage(background4 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        menu.setPadding(new Insets(25,15,10,40));
-        menu.setTranslateY(10);
-        menu.setLayoutX(0);
+        menu.setPadding(new Insets(15,10,0,25));
+        menu.setTranslateY(0);
+        menu.setLayoutX(267);
         root.getChildren().add(menu);
         menu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -149,11 +150,52 @@ public class OpenAccount
                 }
             }
         });
+        ok.setOnAction((ActionEvent e )-> {
+
+
+            if  (passFl.getText().isEmpty()  || checkPassFl.getText().isEmpty() || chb.getItems().isEmpty())
+            {
+
+               if(passFl.getText().isEmpty())
+               {
+                   passFl.setStyle("-fx-border-color: #800000;" +
+                           "    -fx-border-width: 1px;" +
+                           "    -fx-border-style: solid;");
+               }
+               if(checkPassFl.getText().isEmpty())
+               {
+                   checkPassFl.setStyle("-fx-border-color: #800000;" +
+                           "    -fx-border-width: 1px;" +
+                           "    -fx-border-style: solid;");
+               }
 
 
 
 
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning");
+                alert.setHeaderText("Required Fields Empty");
+                alert.setContentText("The fields highlighted in red must be filled "
+                        + "out.\nPlease try again.");
+                alert.showAndWait();
 
+                checkPassFl.setStyle("-fx-border-color: #FFFAFA;" +
+                        "    -fx-border-width: 0px;" +
+                        "    -fx-border-style: solid;");
+
+                passFl.setStyle("-fx-border-color: #FFFAFA;" +
+                        "    -fx-border-width: 0px;" +
+                        "    -fx-border-style: solid;");
+
+
+            }
+
+        });
+
+
+
+
+        primaryStage.setTitle("open an account");
         primaryStage.setHeight(480);
         primaryStage.setWidth(320);
         primaryStage.setScene(scene);

@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -49,8 +50,8 @@ public class CloseAccount
         Text txt = new Text("CLOSE ACCOUNT");
         txt.setLayoutX(80);
         txt.setLayoutY(40);
-        txt.setFont(Font.font("T", FontWeight.LIGHT, FontPosture.ITALIC, 18));
-        txt.setFill(Color.BLACK);
+        txt.setFont(Font.font("T", FontWeight.EXTRA_BOLD, FontPosture.ITALIC, 18));
+        txt.setFill(Color.WHITE);
         root.getChildren().add(txt);
 
 
@@ -85,13 +86,13 @@ public class CloseAccount
 
 
         Button bt = new Button();
-        InputStream input2 = new FileInputStream("./icons/okPadding.png");
+        InputStream input2 = new FileInputStream("./icons/ok.png");
         Image background2 = new Image(input2);
         bt.setBackground(new Background(new BackgroundImage(background2 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        bt.setPadding(new Insets(10,15,10,15));
+        bt.setPadding(new Insets(10,30,10,40));
         bt.setFont(Font.font("T", FontWeight.LIGHT, FontPosture.ITALIC, 15));
         bt.setTranslateY(pass.getLayoutY()+30);
-        bt.setLayoutX(pass.getLayoutX()+50);
+        bt.setLayoutX(pass.getLayoutX()+40);
         root.getChildren().add(bt);
 
 
@@ -118,12 +119,12 @@ public class CloseAccount
         root.getChildren().add(card);
 
         Button ok = new Button();
-        InputStream input3 = new FileInputStream("./icons/okPadding.png");
+        InputStream input3 = new FileInputStream("./icons/ok.png");
         Image background3 = new Image(input3);
         ok.setBackground(new Background(new BackgroundImage(background3 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        ok.setPadding(new Insets(10,15,10,15));
+        ok.setPadding(new Insets(10,30,10,40));
         ok.setTranslateY(card.getLayoutY()+30);
-        ok.setLayoutX(card.getLayoutX()+50);
+        ok.setLayoutX(card.getLayoutX()+40);
         root.getChildren().add(ok);
 
 
@@ -131,9 +132,9 @@ public class CloseAccount
         InputStream input4 = new FileInputStream("./icons/mennu.png");
         Image background4 = new Image(input4);
         menu.setBackground(new Background(new BackgroundImage(background4 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        menu.setPadding(new Insets(25,15,10,40));
-        menu.setTranslateY(10);
-        menu.setLayoutX(0);
+        menu.setPadding(new Insets(15,10,0,25));
+        menu.setTranslateY(0);
+        menu.setLayoutX(267);
         root.getChildren().add(menu);
         menu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -146,10 +147,90 @@ public class CloseAccount
                 }
             }
         });
+        ok.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                if(pass.getText().isEmpty()|| card.getText().isEmpty())
+                {
+                    if(pass.getText().isEmpty())
+                    {
+                       pass.setStyle("-fx-border-color: #800000;" +
+                                "    -fx-border-width: 1px;" +
+                                "    -fx-border-style: solid;");
+                    }
+                    if(card.getText().isEmpty())
+                    {
+                        card.setStyle("-fx-border-color: #800000;" +
+                                "    -fx-border-width: 1px;" +
+                                "    -fx-border-style: solid;");
+                    }
+
+
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Warning");
+                    alert.setHeaderText("Required Fields Empty");
+                    alert.setContentText("The fields highlighted in red must be filled "
+                            + "out.\nPlease try again.");
+                    alert.showAndWait();
+
+                    pass.setStyle("-fx-border-color: #FFFAFA;" +
+                            "    -fx-border-width: 0px;" +
+                            "    -fx-border-style: solid;");
+                    card.setStyle("-fx-border-color: #FFFAFA;" +
+                            "    -fx-border-width: 0px;" +
+                            "    -fx-border-style: solid;");
+                }
+                else
+                {
+                    Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                    alert2.setTitle("Successfuly");
+                    alert2.setHeaderText("Successful close account");
+                    alert2.showAndWait();
+                }
+
+
+            }
+        });
+
+        bt.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                if(pass.getText().isEmpty())
+                {
+                      pass.setStyle("-fx-border-color: #800000;" +
+                                "    -fx-border-width: 1px;" +
+                                "    -fx-border-style: solid;");
 
 
 
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Warning");
+                    alert.setHeaderText("Required Field Empty");
+                    alert.setContentText("The field highlighted in red must be filled "
+                            + "out.\nPlease try again.");
+                    alert.showAndWait();
 
+                    pass.setStyle("-fx-border-color: #FFFAFA;" +
+                            "    -fx-border-width: 0px;" +
+                            "    -fx-border-style: solid;");
+
+                }
+                else
+                {
+                    Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                    alert2.setTitle("Successfuly");
+                    alert2.setHeaderText("Successful close account");
+                    alert2.showAndWait();
+                }
+
+
+            }
+        });
+
+
+        primaryStage.setTitle("close account");
         primaryStage.setHeight(480);
         primaryStage.setWidth(320);
         primaryStage.setScene(scene);

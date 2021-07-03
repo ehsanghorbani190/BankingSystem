@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
@@ -27,6 +28,9 @@ public class UserPanel
 {
     UserPanel(Stage primaryStage) throws FileNotFoundException {
         Group root = new Group();
+
+
+
         InputStream input = new FileInputStream("./pics/background7.png");
         Image background = new Image(input);
         ImageView backgroundView = new ImageView(background);
@@ -38,6 +42,13 @@ public class UserPanel
 
         primaryStage.setHeight(480);
         primaryStage.setWidth(320);
+
+        Text mu = new Text("MENU");
+        mu.setLayoutX(130);
+        mu.setLayoutY(40);
+        mu.setFont(Font.font("T", FontWeight.EXTRA_BOLD, FontPosture.ITALIC, 18));
+        mu.setFill(Color.WHITE);
+        root.getChildren().add(mu);
 
 
 
@@ -86,7 +97,7 @@ public class UserPanel
             }
         });
 
-
+/*
 
         Button bt3 = new Button("ACCOUNT MANAGEMENT");
         InputStream input4 = new FileInputStream("./icons/3.png");
@@ -99,6 +110,8 @@ public class UserPanel
 
         root.getChildren().add(bt3);
 
+ */
+
 
         Button bt4 = new Button("FREQUENTLY USED ACCOUNT");
         InputStream input5 = new FileInputStream("./icons/4.png");
@@ -107,7 +120,7 @@ public class UserPanel
         bt4.setBackground(new Background(new BackgroundFill(Color.WHITE , CornerRadii.EMPTY , Insets.EMPTY)));
         bt4.setFont(Font.font("T", FontWeight.LIGHT, FontPosture.ITALIC, 12));
         bt4.setTranslateX(30);
-        bt4.setTranslateY(210);
+        bt4.setTranslateY(170);
 
         root.getChildren().add(bt4);
 
@@ -132,7 +145,7 @@ public class UserPanel
         bt5.setBackground(new Background(new BackgroundFill(Color.WHITE , CornerRadii.EMPTY , Insets.EMPTY)));
         bt5.setFont(Font.font("T", FontWeight.LIGHT, FontPosture.ITALIC, 12));
         bt5.setTranslateX(30);
-        bt5.setTranslateY(250);
+        bt5.setTranslateY(210);
 
         root.getChildren().add(bt5);
         bt5.setOnAction(new EventHandler<ActionEvent>() {
@@ -155,7 +168,7 @@ public class UserPanel
         bt6.setBackground(new Background(new BackgroundFill(Color.WHITE , CornerRadii.EMPTY , Insets.EMPTY)));
         bt6.setFont(Font.font("T", FontWeight.LIGHT, FontPosture.ITALIC, 12));
         bt6.setTranslateX(30);
-        bt6.setTranslateY(290);
+        bt6.setTranslateY(250);
 
         root.getChildren().add(bt6);
 
@@ -178,7 +191,7 @@ public class UserPanel
         bt7.setBackground(new Background(new BackgroundFill(Color.WHITE , CornerRadii.EMPTY , Insets.EMPTY)));
         bt7.setFont(Font.font("T", FontWeight.LIGHT, FontPosture.ITALIC, 12));
         bt7.setTranslateX(30);
-        bt7.setTranslateY(330);
+        bt7.setTranslateY(290);
 
         root.getChildren().add(bt7);
 
@@ -202,7 +215,7 @@ public class UserPanel
         bt8.setBackground(new Background(new BackgroundFill(Color.WHITE , CornerRadii.EMPTY , Insets.EMPTY)));
         bt8.setFont(Font.font("T", FontWeight.LIGHT, FontPosture.ITALIC, 12));
         bt8.setTranslateX(30);
-        bt8.setTranslateY(370);
+        bt8.setTranslateY(330);
 
         root.getChildren().add(bt8);
 
@@ -217,6 +230,7 @@ public class UserPanel
                 }
             }
         });
+        primaryStage.setTitle("user panel");
 
 
         Scene scene = new Scene(root);

@@ -11,6 +11,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -86,6 +87,78 @@ public class SignUp
                 }
             }
         });
+        bt.setOnAction((ActionEvent e )-> {
+
+
+            if  (usernamFl.getText().isEmpty() || passFl.getText().isEmpty() || mailFl.getText().isEmpty() || phoneFl.getText().isEmpty() || checkPassFl.getText().isEmpty())
+            {
+
+                if (usernamFl.getText().isEmpty())
+                {
+                    usernamFl.setStyle("-fx-border-color: #800000;" +
+                            "    -fx-border-width: 1px;" +
+                            "    -fx-border-style: solid;");
+                }
+                if(passFl.getText().isEmpty())
+                {
+                    passFl.setStyle("-fx-border-color: #800000;" +
+                            "    -fx-border-width: 1px;" +
+                            "    -fx-border-style: solid;");
+                }
+                if(checkPassFl.getText().isEmpty())
+                {
+                    checkPassFl.setStyle("-fx-border-color: #800000;" +
+                            "    -fx-border-width: 1px;" +
+                            "    -fx-border-style: solid;");
+                }
+                if(mailFl.getText().isEmpty())
+                {
+                    mailFl.setStyle("-fx-border-color: #800000;" +
+                            "    -fx-border-width: 1px;" +
+                            "    -fx-border-style: solid;");
+                }
+                if(phoneFl.getText().isEmpty())
+                {
+                    phoneFl.setStyle("-fx-border-color: #800000;" +
+                            "    -fx-border-width: 1px;" +
+                            "    -fx-border-style: solid;");
+                }
+
+
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning");
+                alert.setHeaderText("Required Fields Empty");
+                alert.setContentText("The fields highlighted in red must be filled "
+                        + "out.\nPlease try again.");
+                alert.showAndWait();
+
+                usernamFl.setStyle("-fx-border-color: #FFFAFA;" +
+                        "    -fx-border-width: 0px;" +
+                        "    -fx-border-style: solid;");
+                passFl.setStyle("-fx-border-color: #FFFAFA;" +
+                        "    -fx-border-width: 0px;" +
+                        "    -fx-border-style: solid;");
+                checkPassFl.setStyle("-fx-border-color: #FFFAFA;" +
+                        "    -fx-border-width: 0px;" +
+                        "    -fx-border-style: solid;");
+                mailFl.setStyle("-fx-border-color: #FFFAFA;" +
+                        "    -fx-border-width: 0px;" +
+                        "    -fx-border-style: solid;");
+                phoneFl.setStyle("-fx-border-color: #FFFAFA;" +
+                        "    -fx-border-width: 0px;" +
+                        "    -fx-border-style: solid;");
+            }
+
+            else
+            {
+                primaryStage.close();
+                try {
+                    LogIn lg = new LogIn(primaryStage);
+                } catch (FileNotFoundException problem) {
+                    problem.printStackTrace();
+                }
+            }
+        });
 
         VBox vb = new VBox(usernameBx , mailBx , passBx , checkPassBx , phoneBx  , bt);
         vb.setLayoutX(60);
@@ -95,7 +168,7 @@ public class SignUp
         InputStream input2 = new FileInputStream("./pics/back6.png");
         Image background2 = new Image(input2);
         ImageView backgroundView = new ImageView(background2);
-        backgroundView.setLayoutX(0);
+        backgroundView.setLayoutX(-5);
         backgroundView.setLayoutY(-90);
         backgroundView.setPreserveRatio(false);
 

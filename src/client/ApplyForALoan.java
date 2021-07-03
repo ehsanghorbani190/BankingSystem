@@ -24,10 +24,7 @@ import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
+import javafx.scene.text.*;
 import javafx.stage.Stage;
 
 public class ApplyForALoan
@@ -46,9 +43,10 @@ public class ApplyForALoan
         root.getChildren().add(backgroundView);
 
         Text txt = new Text("APPLY FOR A LOAN");
-        txt.setLayoutX(80);
+
+        txt.setLayoutX(60);
         txt.setLayoutY(40);
-        txt.setFont(Font.font("T", FontWeight.LIGHT, FontPosture.ITALIC, 18));
+        txt.setFont(Font.font("T", FontWeight.EXTRA_BOLD, FontPosture.ITALIC, 18));
         txt.setFill(Color.WHITE);
         root.getChildren().add(txt);
 
@@ -69,7 +67,7 @@ public class ApplyForALoan
 
 
         Text select = new Text("LOAN AMOUNT : ");
-        select.setLayoutY(165);
+        select.setLayoutY(125);
         select.setLayoutX(50);
         //root.getChildren().add(select);
 
@@ -107,16 +105,18 @@ public class ApplyForALoan
 
         VBox vb = new VBox(select,cb , select2, cb2);
         vb.setLayoutX(100);
-        vb.setLayoutY(200);
+        vb.setLayoutY(170);
+        vb.setSpacing(10);
+        vb.setFillWidth(true);
 
 
         Button ok = new Button();
-        InputStream input3 = new FileInputStream("./icons/okPadding.png");
+        InputStream input3 = new FileInputStream("./icons/ok.png");
         Image background3 = new Image(input3);
         ok.setBackground(new Background(new BackgroundImage(background3 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        ok.setPadding(new Insets(10,12,10,12));
+        ok.setPadding(new Insets(10,30,10,40));
         ok.setTranslateY(300);
-        ok.setLayoutX(140);
+        ok.setLayoutX(120);
         root.getChildren().add(ok);
         root.getChildren().add(vb);
 
@@ -125,9 +125,9 @@ public class ApplyForALoan
         InputStream input4 = new FileInputStream("./icons/mennu.png");
         Image background4 = new Image(input4);
         menu.setBackground(new Background(new BackgroundImage(background4 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        menu.setPadding(new Insets(25,15,10,40));
-        menu.setTranslateY(20);
-        menu.setLayoutX(0);
+        menu.setPadding(new Insets(15,10,0,25));
+        menu.setTranslateY(0);
+        menu.setLayoutX(267);
         root.getChildren().add(menu);
         menu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -141,7 +141,7 @@ public class ApplyForALoan
             }
         });
 
-
+        primaryStage.setTitle("apply for a loan");
         primaryStage.setHeight(480);
         primaryStage.setWidth(320);
         primaryStage.setScene(scene);

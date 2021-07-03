@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -49,7 +50,7 @@ public class PayingTheBill
         Text txt = new Text("PAYING THE BILL");
         txt.setLayoutX(80);
         txt.setLayoutY(40);
-        txt.setFont(Font.font("T", FontWeight.LIGHT, FontPosture.ITALIC, 18));
+        txt.setFont(Font.font("T", FontWeight.EXTRA_BOLD, FontPosture.ITALIC, 18));
         txt.setFill(Color.WHITE);
         root.getChildren().add(txt);
 
@@ -96,12 +97,12 @@ public class PayingTheBill
         root.getChildren().add(pCode);
 
         Button ok = new Button();
-        InputStream input3 = new FileInputStream("./icons/okPadding.png");
+        InputStream input3 = new FileInputStream("./icons/ok.png");
         Image background3 = new Image(input3);
         ok.setBackground(new Background(new BackgroundImage(background3 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        ok.setPadding(new Insets(10,15,10,15));
+        ok.setPadding(new Insets(10,30,10,40));
         ok.setTranslateY(pCode.getLayoutY()+50);
-        ok.setLayoutX(pCode.getLayoutX()+50);
+        ok.setLayoutX(pCode.getLayoutX()+40);
         root.getChildren().add(ok);
 
 
@@ -109,9 +110,9 @@ public class PayingTheBill
         InputStream input4 = new FileInputStream("./icons/mennu.png");
         Image background4 = new Image(input4);
         menu.setBackground(new Background(new BackgroundImage(background4 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        menu.setPadding(new Insets(25,15,10,40));
-        menu.setTranslateY(20);
-        menu.setLayoutX(0);
+        menu.setPadding(new Insets(15,10,0,25));
+        menu.setTranslateY(0);
+        menu.setLayoutX(267);
         root.getChildren().add(menu);
         menu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -125,9 +126,58 @@ public class PayingTheBill
             }
         });
 
+        ok.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                if(pCode.getText().isEmpty()|| bId.getText().isEmpty())
+                {
+
+                    if(pCode.getText().isEmpty())
+                    {
+                        pCode.setStyle("-fx-border-color: #800000;" +
+                                "    -fx-border-width: 1px;" +
+                                "    -fx-border-style: solid;");
+                    }
+                    if(bId.getText().isEmpty())
+                    {
+                        bId.setStyle("-fx-border-color: #800000;" +
+                                "    -fx-border-width: 1px;" +
+                                "    -fx-border-style: solid;");
+                    }
+
+
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Warning");
+                    alert.setHeaderText("Required Fields Empty");
+                    alert.setContentText("The fields highlighted in red must be filled "
+                            + "out.\nPlease try again.");
+                    alert.showAndWait();
+
+                    bId.setStyle("-fx-border-color: #FFFAFA;" +
+                            "    -fx-border-width: 0px;" +
+                            "    -fx-border-style: solid;");
+
+                    pCode.setStyle("-fx-border-color: #FFFAFA;" +
+                            "    -fx-border-width: 0px;" +
+                            "    -fx-border-style: solid;");
+                }
+                else
+                {
+                    Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                    alert2.setTitle("Successfuly");
+                    alert2.setHeaderText("Successful paying the bill");
+                    alert2.setContentText("You can see the changes in the 'Account Information' section");
+                    alert2.showAndWait();
+                }
+
+
+            }
+        });
 
 
 
+        primaryStage.setTitle("paying the bill");
         primaryStage.setHeight(480);
         primaryStage.setWidth(320);
         primaryStage.setScene(scene);

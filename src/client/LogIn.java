@@ -3,13 +3,17 @@ package client;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -26,13 +30,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class LogIn {
 
 
     LogIn(Stage primaryStage) throws FileNotFoundException {
         Group root = new Group();
+
+
 
         TextField usernamFl = new TextField();
         usernamFl.setPromptText("username");
@@ -42,6 +50,7 @@ public class LogIn {
 
 
         PasswordField passFl = new PasswordField();
+
         passFl.setPromptText("password");
         HBox passBx = new HBox( passFl);
         passBx.setPadding(new Insets(10,10,10,10));
@@ -71,8 +80,8 @@ public class LogIn {
 
         VBox vb = new VBox(usernameBx , passBx , bt , bt2);
         vb.setLayoutX(80);
-        vb.setLayoutY(205);
-        vb.setSpacing(-2);
+        vb.setLayoutY(204);
+        vb.setSpacing(-3);
 
         InputStream input2 = new FileInputStream("./pics/background0.png");
         Image background2 = new Image(input2);
@@ -84,6 +93,7 @@ public class LogIn {
         root.getChildren().add(backgroundView);
 
         root.getChildren().add(vb);
+
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setHeight(480);
@@ -91,17 +101,6 @@ public class LogIn {
         primaryStage.setResizable(false);
         primaryStage.show();
 
-        bt.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                primaryStage.close();
-                try {
-                    UserPanel up = new UserPanel(primaryStage);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
 
         bt2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -114,7 +113,52 @@ public class LogIn {
                 }
             }
         });
+        bt.setOnAction((ActionEvent e )-> {
 
+
+            if  (usernamFl.getText().isEmpty() | passFl.getText().isEmpty() )
+            {
+                if (usernamFl.getText().isEmpty()) {
+
+                    usernamFl.setStyle("-fx-border-color: #800000;" +
+                            "    -fx-border-width: 1px;" +
+                            "    -fx-border-style: solid;");
+                }
+                if(passFl.getText().isEmpty()) {
+
+                    passFl.setStyle("-fx-border-color: #800000;" +
+                            "    -fx-border-width: 1px;" +
+                            "    -fx-border-style: solid;");
+                }
+
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning");
+                alert.setHeaderText("Required Fields Empty");
+                alert.setContentText("The fields highlighted in red must be filled "
+                        + "out.\nPlease try again.");
+                alert.showAndWait();
+
+
+                usernamFl.setStyle("-fx-border-color: #FFFAFA;" +
+                        "    -fx-border-width: 0px;" +
+                        "    -fx-border-style: solid;");
+
+                passFl.setStyle("-fx-border-color: #FFFAFA;" +
+                        "    -fx-border-width: 0px;" +
+                        "    -fx-border-style: solid;");
+            }
+            else
+            {
+                primaryStage.close();
+                 try {
+                  UserPanel up = new UserPanel(primaryStage);
+                     } catch (FileNotFoundException problem) {
+                         problem.printStackTrace();
+                    }
+            }
+        });
+
+    primaryStage.setTitle("login");
 
     }
 }

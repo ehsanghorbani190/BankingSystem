@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -49,7 +50,7 @@ public class MoneyTransfer
         Text txt = new Text("MONEY TRANSFER");
         txt.setLayoutX(80);
         txt.setLayoutY(40);
-        txt.setFont(Font.font("T", FontWeight.LIGHT, FontPosture.ITALIC, 18));
+        txt.setFont(Font.font("T", FontWeight.EXTRA_BOLD, FontPosture.ITALIC, 18));
         txt.setFill(Color.WHITE);
         root.getChildren().add(txt);
 
@@ -110,21 +111,21 @@ public class MoneyTransfer
 
 
         Button ok = new Button();
-        InputStream input3 = new FileInputStream("./icons/okPadding.png");
+        InputStream input3 = new FileInputStream("./icons/ok.png");
         Image background3 = new Image(input3);
         ok.setBackground(new Background(new BackgroundImage(background3 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        ok.setPadding(new Insets(10,15,10,15));
+        ok.setPadding(new Insets(10,30,10,40));
         ok.setTranslateY(dsCard.getLayoutY()+50);
-        ok.setLayoutX(dsCard.getLayoutX()+50);
+        ok.setLayoutX(dsCard.getLayoutX()+40);
         root.getChildren().add(ok);
 
         Button menu = new Button();
         InputStream input4 = new FileInputStream("./icons/mennu.png");
         Image background4 = new Image(input4);
         menu.setBackground(new Background(new BackgroundImage(background4 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        menu.setPadding(new Insets(25,15,10,40));
-        menu.setTranslateY(10);
-        menu.setLayoutX(0);
+        menu.setPadding(new Insets(15,10,0,25));
+        menu.setTranslateY(0);
+        menu.setLayoutX(267);
         root.getChildren().add(menu);
         menu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -137,7 +138,67 @@ public class MoneyTransfer
                 }
             }
         });
+        ok.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
 
+                if(dsCard.getText().isEmpty()|| scCard.getText().isEmpty())
+                {
+
+                    if(scCard.getText().isEmpty())
+                    {
+                        scCard.setStyle("-fx-border-color: #800000;" +
+                                "    -fx-border-width: 1px;" +
+                                "    -fx-border-style: solid;");
+                    }
+                    if(scPass.getText().isEmpty())
+                    {
+                        scPass.setStyle("-fx-border-color: #800000;" +
+                                "    -fx-border-width: 1px;" +
+                                "    -fx-border-style: solid;");
+                    }
+                    if(dsCard.getText().isEmpty())
+                    {
+                        dsCard.setStyle("-fx-border-color: #800000;" +
+                                "    -fx-border-width: 1px;" +
+                                "    -fx-border-style: solid;");
+                    }
+
+
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Warning");
+                    alert.setHeaderText("Required Fields Empty");
+                    alert.setContentText("The fields highlighted in red must be filled "
+                            + "out.\nPlease try again.");
+                    alert.showAndWait();
+
+                    scCard.setStyle("-fx-border-color: #FFFAFA;" +
+                            "    -fx-border-width: 0px;" +
+                            "    -fx-border-style: solid;");
+
+                    scPass.setStyle("-fx-border-color: #FFFAFA;" +
+                            "    -fx-border-width: 0px;" +
+                            "    -fx-border-style: solid;");
+
+                    dsCard.setStyle("-fx-border-color: #FFFAFA;" +
+                            "    -fx-border-width: 0px;" +
+                            "    -fx-border-style: solid;");
+                }
+               else
+                {
+                    Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                    alert2.setTitle("Successfuly");
+                    alert2.setHeaderText("Successful money transfer");
+                    alert2.setContentText("You can see the changes in the 'Account Information' section");
+                    alert2.showAndWait();
+                }
+
+
+            }
+        });
+
+
+        primaryStage.setTitle("money transfer");
         primaryStage.setHeight(480);
         primaryStage.setWidth(320);
         primaryStage.setScene(scene);

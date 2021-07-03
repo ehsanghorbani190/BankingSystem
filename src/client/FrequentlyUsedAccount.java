@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -52,9 +53,9 @@ public class FrequentlyUsedAccount
         root.getChildren().add(backgroundView);
 
         Text txt = new Text("FREQUENTLY USED ACCOUNT");
-        txt.setLayoutX(70);
+        txt.setLayoutX(30);
         txt.setLayoutY(40);
-        txt.setFont(Font.font("T", FontWeight.LIGHT, FontPosture.ITALIC, 15));
+        txt.setFont(Font.font("T", FontWeight.EXTRA_BOLD, FontPosture.ITALIC, 15));
         txt.setFill(Color.WHITE);
         root.getChildren().add(txt);
 
@@ -75,81 +76,150 @@ public class FrequentlyUsedAccount
         root.getChildren().add(rect);
 
 
-        Text text = new Text("selected card numbers:");
-        text.setLayoutX(40);
-        text.setLayoutY(140);
+        Text text = new Text("selected card number:");
+        text.setLayoutX(80);
+        text.setLayoutY(190);
         text.setFill(Color.GRAY);
         root.getChildren().add(text);
 
 
         TextField scCard = new TextField();
-        scCard.setLayoutY(scCard.getLayoutY()+150);
-        scCard.setLayoutX(50);
-        scCard.setPadding(new Insets(0,-10,0,-5));
+        scCard.setLayoutY(scCard.getLayoutY()+200);
+        scCard.setLayoutX(80);
+        scCard.setPadding(new Insets(3,10,10,3));
         root.getChildren().add(scCard);
         saveCard.add(scCard.getText());
 
 
         Text text2 = new Text("alias:");
-        text2.setLayoutX(200);
-        text2.setLayoutY(140);
+        text2.setLayoutX(80);
+        text2.setLayoutY(245);
         text2.setFill(Color.GRAY);
         root.getChildren().add(text2);
 
         TextField alias = new TextField();
-        alias.setLayoutX(180);
-        alias.setLayoutY(scCard.getLayoutY());
-        alias.setPadding(new Insets(0,-25,0,-20));
+        alias.setLayoutX(80);
+        alias.setLayoutY(scCard.getLayoutY()+50);
+        alias.setPadding(new Insets(3,10,10,3));
         root.getChildren().add(alias);
         saveAlias.add(alias.getText());
 
 
+        Button nxtAlias = new Button();
 
-
-        Button nxt = new Button();
-        InputStream input3 = new FileInputStream("./icons/next.png");
+        InputStream input3 = new FileInputStream("./icons/alias.png");
         Image background3 = new Image(input3);
-        nxt.setBackground(new Background(new BackgroundImage(background3 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        nxt.setPadding(new Insets(10,30,10,30));
-        nxt.setTranslateY(scCard.getLayoutY()+250);
-        nxt.setLayoutX(scCard.getLayoutX()+50);
-        root.getChildren().add(nxt);
+        nxtAlias.setBackground(new Background(new BackgroundImage(background3 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 
-        nxt.setOnAction(new EventHandler<ActionEvent>() {
+        nxtAlias.setPadding(new Insets(10 , 30 , 10 , 40));
+        nxtAlias.setLayoutX(115);
+        nxtAlias.setTranslateY(280);
+        root.getChildren().add(nxtAlias);
+
+        Button show = new Button();
+
+        InputStream input4 = new FileInputStream("./icons/show.png");
+        Image background4 = new Image(input4);
+        show.setBackground(new Background(new BackgroundImage(background4 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+
+        show.setPadding(new Insets(10 , 30 , 10 , 40));
+        show.setLayoutX(115);
+        show.setTranslateY(310);
+        root.getChildren().add(show);
+
+
+
+        Button menu = new Button();
+        InputStream input5 = new FileInputStream("./icons/mennu.png");
+        Image background5 = new Image(input5);
+        menu.setBackground(new Background(new BackgroundImage(background5 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        menu.setPadding(new Insets(15,10,0,25));
+        menu.setTranslateY(0);
+        menu.setLayoutX(267);
+        root.getChildren().add(menu);
+
+
+        nxtAlias.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(i<=4)
+
+                if(alias.getText().isEmpty()|| scCard.getText().isEmpty())
                 {
-                    i++;
-                    TextField card2 = new TextField();
-                    card2.setLayoutX(scCard.getLayoutX());
-                    card2.setLayoutY(scCard.getLayoutY() + 30 * i);
-                    card2.setPadding(new Insets(0,-10,0,-5));
-                    root.getChildren().add(card2);
-                    saveCard.add(card2.getText());
 
 
-                    TextField alias2 = new TextField();
-                    alias2.setLayoutX(180);
-                    alias2.setLayoutY(alias.getLayoutY()+30*i);
-                    alias2.setPadding(new Insets(0,-25,0,-20));
-                    root.getChildren().add(alias2);
-                    saveAlias.add(alias2.getText());
+                    if(alias.getText().isEmpty())
+                    {
+                        alias.setStyle("-fx-border-color: #800000;" +
+                                "    -fx-border-width: 1px;" +
+                                "    -fx-border-style: solid;");
+                    }
 
+
+                    if(scCard.getText().isEmpty())
+                    {
+                        scCard.setStyle("-fx-border-color: #800000;" +
+                                "    -fx-border-width: 1px;" +
+                                "    -fx-border-style: solid;");
+                    }
+
+
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Warning");
+                    alert.setHeaderText("Required Fields Empty");
+                    alert.setContentText("The fields highlighted in red must be filled "
+                            + "out.\nPlease try again.");
+                    alert.showAndWait();
+
+                    scCard.setStyle("-fx-border-color: #FFFAFA;" +
+                            "    -fx-border-width: 0px;" +
+                            "    -fx-border-style: solid;");
+
+                    alias.setStyle("-fx-border-color: #FFFAFA;" +
+                            "    -fx-border-width: 0px;" +
+                            "    -fx-border-style: solid;");
                 }
+                else {
+
+
+                    TextField alias = new TextField();
+                    alias.setLayoutX(80);
+                    alias.setLayoutY(scCard.getLayoutY() + 50);
+                    alias.setPadding(new Insets(3, 10, 10, 3));
+                    root.getChildren().add(alias);
+
+                    TextField scCard = new TextField();
+                    scCard.setLayoutY(scCard.getLayoutY() + 200);
+                    scCard.setLayoutX(80);
+                    scCard.setPadding(new Insets(3, 10, 10, 3));
+                    root.getChildren().add(scCard);
+
+
+                    saveAlias.add(alias.getText());
+                    saveCard.add(scCard.getText());
+
+
+                    Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                    alert2.setTitle("Saved!");
+                    alert2.setHeaderText("The desired card number was saved.");
+                    alert2.showAndWait();
+                }
+
 
             }
         });
 
 
-        Button menu = new Button();
-        InputStream input4 = new FileInputStream("./icons/mennu.png");
-        Image background4 = new Image(input4);
-        menu.setBackground(new Background(new BackgroundImage(background4 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        menu.setPadding(new Insets(25,15,10,40));
-        menu.setTranslateY(10);
-        menu.setLayoutX(0);
-        root.getChildren().add(menu);
+        show.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                for (i=0 ; i<saveCard.size() ; i++)
+                {
+                    System.out.println(saveCard.get(i));
+                    System.out.println(saveAlias.get(i));
+                }
+            }
+        });
         menu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -165,6 +235,8 @@ public class FrequentlyUsedAccount
 
 
 
+
+        primaryStage.setTitle("frequntly used account");
         primaryStage.setHeight(480);
         primaryStage.setWidth(320);
         primaryStage.setScene(scene);
