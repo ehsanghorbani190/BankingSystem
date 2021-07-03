@@ -7,6 +7,7 @@ import server.util.Filer;
 import server.util.Identifiable;
 
 public class User implements Identifiable {
+    private static final long serialVersionUID = 3L;
     private String melliCode;
     private String name, passwordHash, email, phone;
     private ArrayList<Account> accounts, fAccounts;
@@ -72,7 +73,8 @@ public class User implements Identifiable {
 
     public Account getAccount(String id) {
         Account temp = Filer.<Account>read(id, Account.class);
-        if(temp == null || !accounts.contains(temp) ) return null;
+        if (temp == null || !accounts.contains(temp))
+            return null;
         return accounts.get(accounts.indexOf(temp));
     }
 
@@ -124,9 +126,10 @@ public class User implements Identifiable {
         update();
     }
 
-    public void deleteAccount(String id , String password , String toID) {
+    public void deleteAccount(String id, String password, String toID) {
         Account temp = getAccount(id);
-        if(temp == null || !temp.login(password))return;
+        if (temp == null || !temp.login(password))
+            return;
         temp = accounts.get(accounts.indexOf(temp));
         if (temp.getFavorite())
             fAccounts.remove(temp);
@@ -137,22 +140,26 @@ public class User implements Identifiable {
 
     public void addAccountToFavorites(String id) {
         Account temp = getAccount(id);
-        if(temp == null) return;
+        if (temp == null)
+            return;
         temp.setFavorite(true);
-        if(!fAccounts.contains(temp)) fAccounts.add(temp);
+        if (!fAccounts.contains(temp))
+            fAccounts.add(temp);
         update();
     }
 
     public void addAliasTo(String id, String alias) {
         Account temp = getAccount(id);
-        if(temp == null) return;
+        if (temp == null)
+            return;
         temp.setAlias(alias);
         update();
     }
 
     public boolean transfer(String from, String password, String to, long val) {
         Account temp = getAccount(from);
-        if(temp == null  || !temp.login(password)) return false;
+        if (temp == null || !temp.login(password))
+            return false;
         boolean i = temp.transfer(password, to, val);
         update();
         return i;
