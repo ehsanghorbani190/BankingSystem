@@ -179,4 +179,20 @@ public class User implements Identifiable {
     public String getUniqueID() {
         return melliCode;
     }
+
+    public static User login(String id, String password) {
+        User user = Filer.<User>read(id, User.class);
+        if (user == null)
+            return user;
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest.update(password.getBytes());
+            String ph = new String(messageDigest.digest());
+            if(user.getPasswordHash().equals(ph)) return user;
+            else return null;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }
