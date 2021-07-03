@@ -47,7 +47,7 @@ public class LogIn {
         passBx.setPadding(new Insets(10,10,10,10));
         passBx.setAlignment(Pos.CENTER);
 
-        InputStream input = new FileInputStream("./icons/b2.jpg");
+        InputStream input = new FileInputStream("./icons/b2.png");
         Image background = new Image(input);
 
         Button bt = new Button();
@@ -59,7 +59,7 @@ public class LogIn {
         bt.setTextFill(Color.KHAKI);
 
 
-        InputStream input3 = new FileInputStream("./icons/button4.jpg");
+        InputStream input3 = new FileInputStream("./icons/button4.png");
         Image background3 = new Image(input3);
         Button bt2 = new Button();
         bt2.setBackground(new Background(new BackgroundImage(background3 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,BackgroundSize.DEFAULT)));
@@ -74,7 +74,7 @@ public class LogIn {
         vb.setLayoutY(205);
         vb.setSpacing(-2);
 
-        InputStream input2 = new FileInputStream("./pics/background0.jpg");
+        InputStream input2 = new FileInputStream("./pics/background0.png");
         Image background2 = new Image(input2);
         ImageView backgroundView = new ImageView(background2);
         backgroundView.setLayoutX(-40);

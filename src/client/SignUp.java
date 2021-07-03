@@ -66,7 +66,7 @@ public class SignUp
 
 
         Button bt = new Button();
-        InputStream input = new FileInputStream("./icons/button3.jpeg");
+        InputStream input = new FileInputStream("./icons/button3.png");
         Image background = new Image(input);
         bt.setBackground(new Background(new BackgroundImage(background , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,BackgroundSize.DEFAULT)));
         bt.setPadding(new Insets(10,50,10,50));

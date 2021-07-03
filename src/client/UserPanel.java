@@ -27,7 +27,7 @@ public class UserPanel
 {
     UserPanel(Stage primaryStage) throws FileNotFoundException {
         Group root = new Group();
-        InputStream input = new FileInputStream("./pics/background7.jpg");
+        InputStream input = new FileInputStream("./pics/background7.png");
         Image background = new Image(input);
         ImageView backgroundView = new ImageView(background);
         backgroundView.setLayoutY(0);

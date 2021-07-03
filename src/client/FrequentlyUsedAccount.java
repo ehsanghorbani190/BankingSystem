@@ -42,7 +42,7 @@ public class FrequentlyUsedAccount
         Group root = new Group();
         Scene scene = new Scene(root);
 
-        InputStream input = new FileInputStream("./pics/background7.jpg");
+        InputStream input = new FileInputStream("./pics/background7.png");
         Image background = new Image(input);
         ImageView backgroundView = new ImageView(background);
         backgroundView.setLayoutY(0);
@@ -107,7 +107,7 @@ public class FrequentlyUsedAccount
 
 
         Button nxt = new Button();
-        InputStream input3 = new FileInputStream("./icons/next.jpeg");
+        InputStream input3 = new FileInputStream("./icons/next.png");
         Image background3 = new Image(input3);
         nxt.setBackground(new Background(new BackgroundImage(background3 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
         nxt.setPadding(new Insets(10,30,10,30));

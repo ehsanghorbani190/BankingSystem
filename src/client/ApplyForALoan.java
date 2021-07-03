@@ -36,7 +36,7 @@ public class ApplyForALoan
         Group root = new Group();
         Scene scene = new Scene(root);
 
-        InputStream input = new FileInputStream("./pics/background7.jpg");
+        InputStream input = new FileInputStream("./pics/background7.png");
         Image background = new Image(input);
         ImageView backgroundView = new ImageView(background);
         backgroundView.setLayoutY(0);
