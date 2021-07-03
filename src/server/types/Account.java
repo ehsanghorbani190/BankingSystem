@@ -151,6 +151,12 @@ public class Account implements Identifiable {
         return to.addMoney(val) && getMoney(val);
     }
 
+    public boolean payBill(String code, String payCode) {
+        if (code == null || payCode == null || code.length() != 13 || payCode.length() != 8)
+            return false;
+        return getMoney((code.hashCode() + payCode.hashCode()) / 100);
+    }
+
     @Override
     public String getUniqueID() {
         return id;
