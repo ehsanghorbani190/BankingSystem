@@ -7,10 +7,10 @@ import server.util.Filer;
 import server.util.Identifiable;
 
 public class User implements Identifiable {
-    private static final long serialVersionUID = 3L;
+    private static final long serialVersionUID = 1L;
     private String melliCode;
     private String name, passwordHash, email, phone;
-    private ArrayList<Account> accounts, fAccounts;
+    private int aCount;
 
     /**
      * @param melliCode
@@ -25,8 +25,7 @@ public class User implements Identifiable {
             this.name = name;
             this.email = email;
             this.phone = phone;
-            accounts = new ArrayList<Account>();
-            fAccounts = new ArrayList<Account>();
+            aCount = 0;
             setPassword(password);
 
         } catch (Exception e) {
@@ -40,7 +39,14 @@ public class User implements Identifiable {
      * @return the accounts
      */
     public ArrayList<Account> getAccounts() {
-        return accounts;
+        ArrayList<Account> res = new ArrayList<Account>();
+        for (int i = 0; i < aCount; i++) {
+            Account temp = Filer.<Account>read(getUniqueID() + i, Account.class);
+            if (temp != null) {
+                res.add(temp);
+            }
+        }
+        return res;
     }
 
     /**
@@ -71,11 +77,8 @@ public class User implements Identifiable {
         return phone;
     }
 
-    public Account getAccount(String id) {
-        Account temp = Filer.<Account>read(id, Account.class);
-        if (temp == null || !accounts.contains(temp))
-            return null;
-        return accounts.get(accounts.indexOf(temp));
+    public Account getAccount(int id) {
+        return Filer.<Account>read(getUniqueID() + id, Account.class);
     }
 
     // NOTE Setters
@@ -118,37 +121,30 @@ public class User implements Identifiable {
 
     }
 
-    public void openAccount(String password, boolean isFavorite, String alias) {
-        Account temp = new Account(this, password, isFavorite, alias);
-        accounts.add(temp);
-        if (isFavorite)
-            fAccounts.add(temp);
+    public Account openAccount(String password, boolean isFavorite, String alias) {
+        Account temp = new Account(getUniqueID() + aCount, password, isFavorite, alias);
+        aCount++;
         update();
+        return temp;
     }
 
-    public void deleteAccount(String id, String password, String toID) {
+    public void deleteAccount(int id, String password, String toID) {
         Account temp = getAccount(id);
         if (temp == null || !temp.login(password))
             return;
-        temp = accounts.get(accounts.indexOf(temp));
-        if (temp.getFavorite())
-            fAccounts.remove(temp);
-        accounts.remove(temp);
         temp.delete(password, toID);
         update();
     }
 
-    public void addAccountToFavorites(String id) {
+    public void addAccountToFavorites(int id) {
         Account temp = getAccount(id);
         if (temp == null)
             return;
         temp.setFavorite(true);
-        if (!fAccounts.contains(temp))
-            fAccounts.add(temp);
         update();
     }
 
-    public void addAliasTo(String id, String alias) {
+    public void addAliasTo(int id, String alias) {
         Account temp = getAccount(id);
         if (temp == null)
             return;
@@ -156,7 +152,7 @@ public class User implements Identifiable {
         update();
     }
 
-    public boolean transfer(String from, String password, String to, long val) {
+    public boolean transfer(int from, String password, String to, long val) {
         Account temp = getAccount(from);
         if (temp == null || !temp.login(password))
             return false;
@@ -188,8 +184,10 @@ public class User implements Identifiable {
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
             messageDigest.update(password.getBytes());
             String ph = new String(messageDigest.digest());
-            if(user.getPasswordHash().equals(ph)) return user;
-            else return null;
+            if (user.getPasswordHash().equals(ph))
+                return user;
+            else
+                return null;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;

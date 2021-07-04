@@ -2,37 +2,29 @@ package server.types;
 
 import java.security.MessageDigest;
 import java.util.ArrayList;
-import java.util.Random;
 
 import server.util.Filer;
 import server.util.Identifiable;
 
 public class Account implements Identifiable {
-    private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 1L;
     private String id;
     private String passwordHash;
     private long balance;
     private boolean isFavorite;
-    private User owner;
     private String alias;
-    private ArrayList<Transaction> transactions;
+    private int tCount;
 
-    public Account(User owner, String password, boolean isFavorite, String alias) {
+    public Account(String id, String password, boolean isFavorite, String alias) {
         try {
             this.balance = 0;
             this.isFavorite = isFavorite;
             this.alias = alias;
-            this.owner = owner;
-            Random r = new Random();
-            int rand = r.nextInt();
-            if (rand < 0) {
-                rand *= -1;
-            }
-            this.id = owner.getUniqueID() + rand;
+            this.id = id;
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
             messageDigest.update(password.getBytes());
             passwordHash = new String(messageDigest.digest());
-            transactions = new ArrayList<Transaction>();
+            tCount = 0;
             update();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -100,13 +92,6 @@ public class Account implements Identifiable {
     }
 
     /**
-     * @return the owner
-     */
-    public User getOwner() {
-        return owner;
-    }
-
-    /**
      * @return the password
      */
     public String getPasswordHash() {
@@ -121,7 +106,15 @@ public class Account implements Identifiable {
      * @return the transactions
      */
     public ArrayList<Transaction> getTransactions() {
-        return transactions;
+        ArrayList<Transaction> res = new ArrayList<Transaction>();
+        for (int i = 0; i < tCount; i++) {
+            res.add(Filer.<Transaction>read(getUniqueID() + i, Transaction.class));
+        }
+        return res;
+    }
+
+    public Transaction getTransaction(int id) {
+        return Filer.<Transaction>read(getUniqueID() + id, Transaction.class);
     }
 
     // NOTE File methods
@@ -143,7 +136,8 @@ public class Account implements Identifiable {
         if (val < 0)
             return false;
         balance += val;
-        transactions.add(new Transaction(id, val, "addMoney"));
+        new Transaction(id + tCount, val, "addMoney");
+        tCount++;
         update();
         return true;
     }
@@ -152,7 +146,8 @@ public class Account implements Identifiable {
         if (val > balance || val < 0)
             return false;
         balance -= val;
-        transactions.add(new Transaction(id, val, "getMoney"));
+        new Transaction(id + tCount, val, "getMoney");
+        tCount++;
         update();
         return true;
     }
@@ -163,8 +158,10 @@ public class Account implements Identifiable {
             return false;
         to.balance += val;
         balance -= val;
-        transactions.add(new Transaction(id, val, "move money to " + to.getUniqueID()));
-        to.transactions.add(new Transaction(to.getUniqueID(), val, "got money from " + id));
+        new Transaction(getUniqueID() + tCount, val, "move money to " + to.getUniqueID());
+        new Transaction(to.getUniqueID() + to.tCount, val, "got money from " + id);
+        tCount++;
+        to.tCount++;
         to.update();
         update();
         return true;
@@ -174,8 +171,9 @@ public class Account implements Identifiable {
         if (code == null || payCode == null || code.length() != 13 || payCode.length() != 8)
             return false;
         balance -= (code.hashCode() + payCode.hashCode()) / 100;
-        transactions.add(new Transaction(id, (code.hashCode() + payCode.hashCode()) / 100,
-                "pay Bill , code: " + code + " , payCode: " + payCode));
+        new Transaction(getUniqueID() + tCount, (code.hashCode() + payCode.hashCode()) / 100,
+                "pay Bill , code: " + code + " , payCode: " + payCode);
+        tCount++;
         update();
         return true;
     }
@@ -185,4 +183,8 @@ public class Account implements Identifiable {
         return id;
     }
 
+    @Override
+    public String toString() {
+        return getUniqueID() + " , " + balance + " , " + getTransactions().toString();
+    }
 }
