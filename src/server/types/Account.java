@@ -1,34 +1,30 @@
 package server.types;
 
 import java.security.MessageDigest;
-import java.util.Random;
+import java.util.ArrayList;
 
 import server.util.Filer;
 import server.util.Identifiable;
 
 public class Account implements Identifiable {
+    private static final long serialVersionUID = 1L;
     private String id;
     private String passwordHash;
     private long balance;
     private boolean isFavorite;
-    private User owner;
     private String alias;
+    private int tCount;
 
-    public Account(User owner, String password, boolean isFavorite, String alias) {
+    public Account(String id, String password, boolean isFavorite, String alias) {
         try {
             this.balance = 0;
             this.isFavorite = isFavorite;
             this.alias = alias;
-            this.owner = owner;
-            Random r = new Random();
-            int rand = r.nextInt();
-            if (rand < 0) {
-                rand *= -1;
-            }
-            this.id = owner.getUniqueID() + rand;
+            this.id = id;
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
             messageDigest.update(password.getBytes());
             passwordHash = new String(messageDigest.digest());
+            tCount = 0;
             update();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -49,7 +45,7 @@ public class Account implements Identifiable {
 
     }
 
-    // NOTE Setters
+    // SECTION - Setters
     /**
      * @param password the password to set
      */
@@ -79,8 +75,9 @@ public class Account implements Identifiable {
         this.alias = alias;
         update();
     }
+    // !SECTION
 
-    // NOTE Getters
+    // SECTION - Getters
     /**
      * @return the alias
      */
@@ -96,13 +93,6 @@ public class Account implements Identifiable {
     }
 
     /**
-     * @return the owner
-     */
-    public User getOwner() {
-        return owner;
-    }
-
-    /**
      * @return the password
      */
     public String getPasswordHash() {
@@ -113,6 +103,22 @@ public class Account implements Identifiable {
         return isFavorite;
     }
 
+    /**
+     * @return the transactions
+     */
+    public ArrayList<Transaction> getTransactions() {
+        ArrayList<Transaction> res = new ArrayList<Transaction>();
+        for (int i = 0; i < tCount; i++) {
+            res.add(Filer.<Transaction>read(getUniqueID() + i, Transaction.class));
+        }
+        return res;
+    }
+
+    public Transaction getTransaction(int id) {
+        return Filer.<Transaction>read(getUniqueID() + id, Transaction.class);
+    }
+
+    // !SECTION
     // NOTE File methods
     public boolean delete(String password, String toID) {
         if (login(password)) {
@@ -127,11 +133,13 @@ public class Account implements Identifiable {
         Filer.<Account>write(this);
     }
 
-    // NOTE Money methods
+    // SECTION - Money methods
     public boolean addMoney(long val) {
         if (val < 0)
             return false;
         balance += val;
+        new Transaction(id + tCount, val, "addMoney");
+        tCount++;
         update();
         return true;
     }
@@ -140,6 +148,8 @@ public class Account implements Identifiable {
         if (val > balance || val < 0)
             return false;
         balance -= val;
+        new Transaction(id + tCount, val, "getMoney");
+        tCount++;
         update();
         return true;
     }
@@ -148,18 +158,36 @@ public class Account implements Identifiable {
         Account to = Filer.<Account>read(toID, Account.class);
         if (to == null || val < 0 || val > balance || !login(password))
             return false;
-        return to.addMoney(val) && getMoney(val);
+        to.balance += val;
+        balance -= val;
+        new Transaction(getUniqueID() + tCount, val, "move money to " + to.getUniqueID());
+        new Transaction(to.getUniqueID() + to.tCount, val, "got money from " + id);
+        tCount++;
+        to.tCount++;
+        to.update();
+        update();
+        return true;
     }
 
     public boolean payBill(String code, String payCode) {
         if (code == null || payCode == null || code.length() != 13 || payCode.length() != 8)
             return false;
-        return getMoney((code.hashCode() + payCode.hashCode()) / 100);
+        balance -= (code.hashCode() + payCode.hashCode()) / 100;
+        new Transaction(getUniqueID() + tCount, (code.hashCode() + payCode.hashCode()) / 100,
+                "pay Bill , code: " + code + " , payCode: " + payCode);
+        tCount++;
+        update();
+        return true;
     }
 
+    // !SECTION
     @Override
     public String getUniqueID() {
         return id;
     }
 
+    @Override
+    public String toString() {
+        return getUniqueID() + " , " + balance + " , " + getTransactions().toString();
+    }
 }

@@ -7,9 +7,10 @@ import server.util.Filer;
 import server.util.Identifiable;
 
 public class User implements Identifiable {
+    private static final long serialVersionUID = 1L;
     private String melliCode;
     private String name, passwordHash, email, phone;
-    private ArrayList<Account> accounts, fAccounts;
+    private int aCount;
 
     /**
      * @param melliCode
@@ -24,8 +25,7 @@ public class User implements Identifiable {
             this.name = name;
             this.email = email;
             this.phone = phone;
-            accounts = new ArrayList<Account>();
-            fAccounts = new ArrayList<Account>();
+            aCount = 0;
             setPassword(password);
 
         } catch (Exception e) {
@@ -34,14 +34,31 @@ public class User implements Identifiable {
 
     }
 
-    // NOTE Getters
+    // SECTION - Getters
     /**
      * @return the accounts
      */
     public ArrayList<Account> getAccounts() {
-        return accounts;
+        ArrayList<Account> res = new ArrayList<Account>();
+        for (int i = 0; i < aCount; i++) {
+            Account temp = Filer.<Account>read(getUniqueID() + i, Account.class);
+            if (temp != null) {
+                res.add(temp);
+            }
+        }
+        return res;
     }
 
+    public ArrayList<Account> getFavoriteAccounts() {
+        ArrayList<Account> res = new ArrayList<Account>();
+        for (int i = 0; i < aCount; i++) {
+            Account temp = Filer.<Account>read(getUniqueID() + i, Account.class);
+            if (temp != null && temp.getFavorite()) {
+                res.add(temp);
+            }
+        }
+        return res;
+    }
     /**
      * @return the email
      */
@@ -70,13 +87,12 @@ public class User implements Identifiable {
         return phone;
     }
 
-    public Account getAccount(String id) {
-        Account temp = Filer.<Account>read(id, Account.class);
-        if(temp == null || !accounts.contains(temp) ) return null;
-        return accounts.get(accounts.indexOf(temp));
+    public Account getAccount(int id) {
+        return Filer.<Account>read(getUniqueID() + id, Account.class);
     }
+    // !SECTION
 
-    // NOTE Setters
+    // SECTION Setters
     /**
      * @param phone the phone to set
      */
@@ -115,50 +131,71 @@ public class User implements Identifiable {
         }
 
     }
+    // !SECTION
 
-    public void openAccount(String password, boolean isFavorite, String alias) {
-        Account temp = new Account(this, password, isFavorite, alias);
-        accounts.add(temp);
-        if (isFavorite)
-            fAccounts.add(temp);
+    // SECTION - Account methods
+    public Account openAccount(String password, boolean isFavorite, String alias) {
+        Account temp = new Account(getUniqueID() + aCount, password, isFavorite, alias);
+        aCount++;
         update();
+        return temp;
     }
 
-    public void deleteAccount(String id , String password , String toID) {
+    public void deleteAccount(int id, String password, String toID) {
         Account temp = getAccount(id);
-        if(temp == null || !temp.login(password))return;
-        temp = accounts.get(accounts.indexOf(temp));
-        if (temp.getFavorite())
-            fAccounts.remove(temp);
-        accounts.remove(temp);
+        if (temp == null || !temp.login(password))
+            return;
         temp.delete(password, toID);
         update();
     }
 
-    public void addAccountToFavorites(String id) {
+    public void addAccountToFavorites(int id) {
         Account temp = getAccount(id);
-        if(temp == null) return;
+        if (temp == null)
+            return;
         temp.setFavorite(true);
-        if(!fAccounts.contains(temp)) fAccounts.add(temp);
         update();
     }
 
-    public void addAliasTo(String id, String alias) {
+    public void addAliasTo(int id, String alias) {
         Account temp = getAccount(id);
-        if(temp == null) return;
+        if (temp == null)
+            return;
         temp.setAlias(alias);
         update();
     }
 
-    public boolean transfer(String from, String password, String to, long val) {
+    // !SECTION
+    public boolean transfer(int from, String password, String to, long val) {
         Account temp = getAccount(from);
-        if(temp == null  || !temp.login(password)) return false;
+        if (temp == null || !temp.login(password))
+            return false;
         boolean i = temp.transfer(password, to, val);
         update();
         return i;
 
     }
 
+    public boolean withdraw(int id, long val) {
+        Account temp = getAccount(id);
+        if (temp == null)
+            return false;
+        return temp.getMoney(val);
+    }
+
+    public boolean deposit(int id, long val) {
+        Account temp = getAccount(id);
+        if (temp == null)
+            return false;
+        return temp.addMoney(val);
+    }
+
+    public boolean payBill(int id, String code, String payCode) {
+        Account temp = getAccount(id);
+        if (temp == null)
+            return false;
+        return temp.payBill(code, payCode);
+    }
     // NOTE File methods
     public boolean delete() {
         return Filer.delete(getUniqueID(), User.class);
@@ -171,5 +208,23 @@ public class User implements Identifiable {
     @Override
     public String getUniqueID() {
         return melliCode;
+    }
+
+    public static User login(String id, String password) {
+        User user = Filer.<User>read(id, User.class);
+        if (user == null)
+            return user;
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest.update(password.getBytes());
+            String ph = new String(messageDigest.digest());
+            if (user.getPasswordHash().equals(ph))
+                return user;
+            else
+                return null;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }
