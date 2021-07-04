@@ -49,6 +49,16 @@ public class User implements Identifiable {
         return res;
     }
 
+    public ArrayList<Account> getFavoriteAccounts() {
+        ArrayList<Account> res = new ArrayList<Account>();
+        for (int i = 0; i < aCount; i++) {
+            Account temp = Filer.<Account>read(getUniqueID() + i, Account.class);
+            if (temp != null && temp.getFavorite()) {
+                res.add(temp);
+            }
+        }
+        return res;
+    }
     /**
      * @return the email
      */
