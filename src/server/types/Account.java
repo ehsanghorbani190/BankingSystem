@@ -45,7 +45,7 @@ public class Account implements Identifiable {
 
     }
 
-    // NOTE Setters
+    // SECTION - Setters
     /**
      * @param password the password to set
      */
@@ -75,8 +75,9 @@ public class Account implements Identifiable {
         this.alias = alias;
         update();
     }
+    // !SECTION
 
-    // NOTE Getters
+    // SECTION - Getters
     /**
      * @return the alias
      */
@@ -117,6 +118,7 @@ public class Account implements Identifiable {
         return Filer.<Transaction>read(getUniqueID() + id, Transaction.class);
     }
 
+    // !SECTION
     // NOTE File methods
     public boolean delete(String password, String toID) {
         if (login(password)) {
@@ -131,7 +133,7 @@ public class Account implements Identifiable {
         Filer.<Account>write(this);
     }
 
-    // NOTE Money methods
+    // SECTION - Money methods
     public boolean addMoney(long val) {
         if (val < 0)
             return false;
@@ -178,6 +180,7 @@ public class Account implements Identifiable {
         return true;
     }
 
+    // !SECTION
     @Override
     public String getUniqueID() {
         return id;

@@ -34,7 +34,7 @@ public class User implements Identifiable {
 
     }
 
-    // NOTE Getters
+    // SECTION - Getters
     /**
      * @return the accounts
      */
@@ -80,8 +80,9 @@ public class User implements Identifiable {
     public Account getAccount(int id) {
         return Filer.<Account>read(getUniqueID() + id, Account.class);
     }
-
-    // NOTE Setters
+    //!SECTION
+    
+    // SECTION Setters
     /**
      * @param phone the phone to set
      */
@@ -120,7 +121,9 @@ public class User implements Identifiable {
         }
 
     }
+    //!SECTION
 
+    //SECTION - Account methods
     public Account openAccount(String password, boolean isFavorite, String alias) {
         Account temp = new Account(getUniqueID() + aCount, password, isFavorite, alias);
         aCount++;
@@ -151,7 +154,7 @@ public class User implements Identifiable {
         temp.setAlias(alias);
         update();
     }
-
+    //!SECTION
     public boolean transfer(int from, String password, String to, long val) {
         Account temp = getAccount(from);
         if (temp == null || !temp.login(password))
