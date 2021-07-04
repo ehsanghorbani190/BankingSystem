@@ -4,7 +4,12 @@ package client;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.util.Calendar;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -16,11 +21,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -31,6 +32,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class MoneyTransfer
 {
@@ -204,5 +206,28 @@ public class MoneyTransfer
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.show();
+
+        Text clock = new Text();
+        DateFormat format = DateFormat.getInstance();
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1),new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                Calendar cal = Calendar.getInstance();
+                clock.setText(format.format(cal.getTime()));
+                clock.setFill(Color.BLACK);
+                clock.setFont(Font.font("T", FontWeight.BOLD, FontPosture.ITALIC, 14));
+
+            }
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+
+
+
+        VBox vx = new VBox(clock);
+        vx.setLayoutX(90);
+        vx.setLayoutY(50);
+        root.getChildren().add(vx);
     }
 }

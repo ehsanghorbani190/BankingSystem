@@ -3,9 +3,14 @@ package client;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,10 +18,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -33,14 +35,13 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 public class LogIn {
 
 
     LogIn(Stage primaryStage) throws FileNotFoundException {
         Group root = new Group();
-
-
 
         TextField usernamFl = new TextField();
         usernamFl.setPromptText("username");
@@ -151,7 +152,9 @@ public class LogIn {
             {
                 primaryStage.close();
                  try {
-                  UserPanel up = new UserPanel(primaryStage);
+
+                     UserPanel up = new UserPanel(primaryStage);
+
                      } catch (FileNotFoundException problem) {
                          problem.printStackTrace();
                     }
@@ -159,6 +162,30 @@ public class LogIn {
         });
 
     primaryStage.setTitle("login");
+
+        Text clock = new Text();
+        DateFormat format = DateFormat.getInstance();
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1),new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                Calendar cal = Calendar.getInstance();
+                clock.setText(format.format(cal.getTime()));
+                clock.setFill(Color.BLACK);
+                clock.setFont(Font.font("T", FontWeight.BOLD, FontPosture.ITALIC, 14));
+
+            }
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+
+
+
+        VBox vx = new VBox(clock);
+        vx.setLayoutX(100);
+        vx.setLayoutY(20);
+        root.getChildren().add(vx);
+
 
     }
 }

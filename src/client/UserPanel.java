@@ -4,7 +4,12 @@ package client;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.util.Calendar;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -16,12 +21,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 
 public class UserPanel
@@ -230,12 +237,55 @@ public class UserPanel
                 }
             }
         });
+        Button bt9 = new Button("LUCKY WHEEL");
+        InputStream input10 = new FileInputStream("./icons/10.png");
+        Image background10 = new Image(input10);
+        bt9.setGraphic(new ImageView(background10));
+        bt9.setBackground(new Background(new BackgroundFill(Color.WHITE , CornerRadii.EMPTY , Insets.EMPTY)));
+        bt9.setFont(Font.font("T", FontWeight.LIGHT, FontPosture.ITALIC, 12));
+        bt9.setTranslateX(30);
+        bt9.setTranslateY(370);
+        root.getChildren().add(bt9);
+        bt9.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    primaryStage.close();
+                    RoundOfLuck sg = new RoundOfLuck(primaryStage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         primaryStage.setTitle("user panel");
 
 
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        Text clock = new Text();
+        DateFormat format = DateFormat.getInstance();
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1),new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                Calendar cal = Calendar.getInstance();
+                clock.setText(format.format(cal.getTime()));
+                clock.setFill(Color.BLACK);
+                clock.setFont(Font.font("T", FontWeight.BOLD, FontPosture.ITALIC, 14));
+
+            }
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+
+
+
+        VBox vx = new VBox(clock);
+        vx.setLayoutX(100);
+        vx.setLayoutY(50);
+        root.getChildren().add(vx);
     }
 }
 
