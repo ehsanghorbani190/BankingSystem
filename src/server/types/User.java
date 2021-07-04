@@ -80,8 +80,8 @@ public class User implements Identifiable {
     public Account getAccount(int id) {
         return Filer.<Account>read(getUniqueID() + id, Account.class);
     }
-    //!SECTION
-    
+    // !SECTION
+
     // SECTION Setters
     /**
      * @param phone the phone to set
@@ -121,9 +121,9 @@ public class User implements Identifiable {
         }
 
     }
-    //!SECTION
+    // !SECTION
 
-    //SECTION - Account methods
+    // SECTION - Account methods
     public Account openAccount(String password, boolean isFavorite, String alias) {
         Account temp = new Account(getUniqueID() + aCount, password, isFavorite, alias);
         aCount++;
@@ -154,7 +154,8 @@ public class User implements Identifiable {
         temp.setAlias(alias);
         update();
     }
-    //!SECTION
+
+    // !SECTION
     public boolean transfer(int from, String password, String to, long val) {
         Account temp = getAccount(from);
         if (temp == null || !temp.login(password))
@@ -165,6 +166,26 @@ public class User implements Identifiable {
 
     }
 
+    public boolean withdraw(int id, long val) {
+        Account temp = getAccount(id);
+        if (temp == null)
+            return false;
+        return temp.getMoney(val);
+    }
+
+    public boolean deposit(int id, long val) {
+        Account temp = getAccount(id);
+        if (temp == null)
+            return false;
+        return temp.addMoney(val);
+    }
+
+    public boolean payBill(int id, String code, String payCode) {
+        Account temp = getAccount(id);
+        if (temp == null)
+            return false;
+        return temp.payBill(code, payCode);
+    }
     // NOTE File methods
     public boolean delete() {
         return Filer.delete(getUniqueID(), User.class);
