@@ -3,6 +3,8 @@ package server;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import server.util.ServerHand;
+
 public class Server {
     private ServerSocket server;
     private int port = 9090;
@@ -30,5 +32,7 @@ public class Server {
             }
         }
     }
-
+    public static void main(String[] args) {
+        new Server();
+    }
 }
