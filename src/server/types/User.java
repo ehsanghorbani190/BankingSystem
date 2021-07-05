@@ -2,6 +2,8 @@ package server.types;
 
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import server.util.Filer;
 import server.util.Identifiable;
@@ -193,6 +195,15 @@ public class User implements Identifiable {
         return temp.payBill(code, payCode);
     }
 
+    public void getLoan(int id, long val, int periodInDays) {
+        Account temp = getAccount(id);
+        if (temp == null)
+            return;
+        temp.addMoney(val);
+        Timer timer = new Timer();
+        timer.schedule(new PayLoanDebts(temp, val, timer), 0, periodInDays * 24 * 60 * 60 / val);
+    }
+
     // NOTE File methods
     public synchronized boolean delete() {
         return Filer.delete(getUniqueID(), User.class);
@@ -224,4 +235,31 @@ public class User implements Identifiable {
             return null;
         }
     }
+}
+
+class PayLoanDebts extends TimerTask {
+    private Account account;
+    private long count = 0;
+    private long times;
+    private Timer timer;
+
+    public PayLoanDebts(Account account, long val, Timer timer) {
+        this.account = account;
+        times = val / 1000;
+        this.timer = timer;
+    }
+
+    @Override
+    public void run() {
+        if (count == times - 1) {
+            this.cancel();
+            timer.cancel();
+            timer.purge();
+        }
+
+        boolean i = account.getMoney(1000);
+        if (i)
+            count++;
+    }
+
 }
