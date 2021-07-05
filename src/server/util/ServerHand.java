@@ -28,22 +28,30 @@ public class ServerHand implements Runnable {
             while (true) {
                 DataDealer request = (DataDealer) (in.readObject());
                 if (request != null) {
-                    DataDealer response = new DataDealer(-1, null);
+                    DataDealer response = new DataDealer(-1);
                     switch (request.getStatus()) {
                         case 0: // NOTE 0 for LOGIN
                             user = User.login(request.getData("melliCode"), request.getData("password"));
                             if (user == null) {
                                 response.setStatus(500);
                                 response.setError(
-                                        "Inueid Credentials: Password is wrong or no user found with this MelliCode");
+                                        "Invalid Credentials: Password is wrong or no user found with this MelliCode");
                             } else {
                                 response.setStatus(200);
                             }
                             break;
                         case 1:// NOTE 1 for SIGN-UP
-                            response.setStatus(201);
-                            user = new User(request.getData("melliCode"), request.getData("name"),
-                                    request.getData("password"), request.getData("email"), request.getData("phone"));
+                            if (request.getData("melliCode") == null || request.getData("name") == null
+                                    || request.getData("password") == null || request.getData("email") == null
+                                    || request.getData("phone") == null) {
+                                response.setStatus(501);
+                                response.setError("Invalid Credentials");
+                            } else {
+                                response.setStatus(201);
+                                user = new User(request.getData("melliCode"), request.getData("name"),
+                                        request.getData("password"), request.getData("email"),
+                                        request.getData("phone"));
+                            }
                             break;
                         case 2:// NOTE 2 for Getting accounts
                             if (user.getAccounts().size() == 0) {
@@ -137,7 +145,7 @@ public class ServerHand implements Runnable {
                             break;
                         case 8:// NOTE 8 for transfer money
                             if (request.getData("id") == null || request.getData("password") == null) {
-                                response.setError("Inueid Credentials");
+                                response.setError("Invalid Credentials");
                                 response.setStatus(5080);
                             } else {
                                 boolean i = user.transfer(Integer.parseInt(request.getData("id")),
@@ -162,7 +170,7 @@ public class ServerHand implements Runnable {
                                     response.setStatus(209);
                                 } else {
                                     response.setStatus(5091);
-                                    response.setError("Error while paying bill : Inueid Credentials ");
+                                    response.setError("Error while paying bill : Invalid Credentials ");
                                 }
                             }
                             break;
@@ -181,7 +189,7 @@ public class ServerHand implements Runnable {
                             if (request.getData("id") == null || request.getData("password") == null
                                     || (user.getAccount(Integer.parseInt(request.getData("id"))).getBalance() != 0
                                             && request.getData("dest") == null)) {
-                                response.setError("Inueid Credentials");
+                                response.setError("Invalid Credentials");
                                 response.setStatus(5011);
                             } else {
                                 user.deleteAccount(Integer.parseInt(request.getData("id")), request.getData("password"),
@@ -219,6 +227,7 @@ public class ServerHand implements Runnable {
                     }
                     out.writeObject(response);
                     out.flush();
+                    System.out.println(response.getError());
                 }
             }
 
