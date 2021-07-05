@@ -27,6 +27,12 @@ public class DataDealer {
     public int getStatus() {
         return status;
     }
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(int status) {
+        this.status = status;
+    }
     public void addData(String key, String value){
         data.put(key, value);
     }
