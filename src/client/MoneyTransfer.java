@@ -15,10 +15,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -73,16 +70,16 @@ public class MoneyTransfer
 
         Text text = new Text("Source card number:");
         text.setLayoutX(80);
-        text.setLayoutY(140);
+        text.setLayoutY(180);
         text.setFill(Color.GRAY);
         root.getChildren().add(text);
 
 
-        TextField scCard = new TextField();
+        ChoiceBox scCard = new ChoiceBox();
         scCard.setLayoutY(text.getLayoutY()+10);
         scCard.setLayoutX(80);
         root.getChildren().add(scCard);
-        scCard.setPromptText("Source card");
+       // scCard.setPromptText("Source card");
 
         Text text2 = new Text("password:");
         text2.setLayoutX(80);
@@ -111,14 +108,17 @@ public class MoneyTransfer
 
 
 
-
         Button ok = new Button();
-        InputStream input3 = new FileInputStream("./icons/ok.png");
+        ok.setTranslateX(245);
+        ok.setTranslateY(230);
+
+        InputStream input3 = new FileInputStream("./icons/next.png");
         Image background3 = new Image(input3);
         ok.setBackground(new Background(new BackgroundImage(background3 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        ok.setPadding(new Insets(10,30,10,40));
-        ok.setTranslateY(dsCard.getLayoutY()+50);
-        ok.setLayoutX(dsCard.getLayoutX()+40);
+        ok.setPadding(new Insets(15,0,0,30));
+
+
+
         root.getChildren().add(ok);
 
         Button menu = new Button();
@@ -144,10 +144,10 @@ public class MoneyTransfer
             @Override
             public void handle(ActionEvent event) {
 
-                if(dsCard.getText().isEmpty()|| scCard.getText().isEmpty())
+                if(dsCard.getText().isEmpty() || scCard.getItems().isEmpty())
                 {
 
-                    if(scCard.getText().isEmpty())
+                    if(scCard.getItems().isEmpty())
                     {
                         scCard.setStyle("-fx-border-color: #800000;" +
                                 "    -fx-border-width: 1px;" +

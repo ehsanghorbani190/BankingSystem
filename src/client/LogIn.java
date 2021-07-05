@@ -43,6 +43,7 @@ public class LogIn {
     LogIn(Stage primaryStage) throws FileNotFoundException {
         Group root = new Group();
 
+
         TextField usernamFl = new TextField();
         usernamFl.setPromptText("username");
         HBox usernameBx = new HBox( usernamFl);
@@ -108,7 +109,8 @@ public class LogIn {
             public void handle(ActionEvent event) {
                 try {
                     primaryStage.close();
-                    SignUp sg = new SignUp(primaryStage);
+                    new DepositOrWithdraw(primaryStage);
+                    //SignUp sg = new SignUp(primaryStage);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -148,8 +150,10 @@ public class LogIn {
                         "    -fx-border-width: 0px;" +
                         "    -fx-border-style: solid;");
             }
+
             else
             {
+
                 primaryStage.close();
                  try {
 

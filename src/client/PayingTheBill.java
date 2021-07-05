@@ -17,6 +17,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -73,38 +74,56 @@ public class PayingTheBill
 
 
 
-        Text text = new Text("Billing ID :");
+        Text text = new Text("Source card number:");
         text.setLayoutX(80);
-        text.setLayoutY(140);
+        text.setLayoutY(180);
         text.setFill(Color.GRAY);
         root.getChildren().add(text);
 
 
-        TextField bId = new TextField();
-        bId.setPromptText("billing id");
-        bId.setLayoutY(bId.getLayoutY()+150);
-        bId.setLayoutX(80);
-        root.getChildren().add(bId);
+        ChoiceBox scCard = new ChoiceBox();
+        scCard.setLayoutY(190);
+        scCard.setLayoutX(80);
+        root.getChildren().add(scCard);
 
-        Text text2 = new Text("Payment code :");
+
+
+        Text text2 = new Text("Billing code :");
         text2.setLayoutX(80);
-        text2.setLayoutY(bId.getLayoutY()+50);
+        text2.setLayoutY(240);
         text2.setFill(Color.GRAY);
         root.getChildren().add(text2);
 
+
+        TextField bId = new TextField();
+        bId.setPromptText("billing code");
+        bId.setLayoutY(250);
+        bId.setLayoutX(80);
+        root.getChildren().add(bId);
+
+        Text text3 = new Text("Payment code :");
+        text3.setLayoutX(80);
+        text3.setLayoutY(290);
+        text3.setFill(Color.GRAY);
+        root.getChildren().add(text3);
+
         TextField pCode = new TextField();
         pCode.setPromptText("payment code");
-        pCode.setLayoutY(text2.getLayoutY()+10);
+        pCode.setLayoutY(300);
         pCode.setLayoutX(80);
         root.getChildren().add(pCode);
 
         Button ok = new Button();
-        InputStream input3 = new FileInputStream("./icons/ok.png");
+        ok.setTranslateX(245);
+        ok.setTranslateY(230);
+
+        InputStream input3 = new FileInputStream("./icons/next.png");
         Image background3 = new Image(input3);
         ok.setBackground(new Background(new BackgroundImage(background3 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        ok.setPadding(new Insets(10,30,10,40));
-        ok.setTranslateY(pCode.getLayoutY()+50);
-        ok.setLayoutX(pCode.getLayoutX()+40);
+        ok.setPadding(new Insets(15,0,0,30));
+
+
+
         root.getChildren().add(ok);
 
 

@@ -72,65 +72,54 @@ public class OpenAccount
         );
         root.getChildren().add(rect);
 
-        Text text = new Text("Types of bank accounts:");
-        text.setLayoutX(80);
-        text.setLayoutY(140);
-        text.setFill(Color.BLACK);
-        root.getChildren().add(text);
 
-        ChoiceBox chb = new ChoiceBox();
-        chb.getItems().add("قرض الحسنه پس انداز");
-        chb.getItems().add("قرض الحسنه جاری    ");
-        chb.getItems().add("سپرده کوتاه مدت    ");
-        chb.getItems().add("سپرده بلند مدت     ");
-        chb.getItems().add("سپرده طرح دار      ");
-        chb.setLayoutY(160);
-        chb.setLayoutX(80);
-        root.getChildren().add(chb);
-
-
-        Text tx = new Text("Password : ");
+        Text tx = new Text("* Password : ");
         tx.setLayoutX(80);
-        tx.setLayoutY(220);
+        tx.setLayoutY(150);
         tx.setFill(Color.BLACK);
         root.getChildren().add(tx);
-
-
 
 
         PasswordField passFl = new PasswordField();
         passFl.setPromptText("password");
         passFl.setLayoutX(80);
-        passFl.setLayoutY(230);
+        passFl.setLayoutY(160);
         root.getChildren().add(passFl);
 
 
 
 
 
-        Text tx2 = new Text("Confirm password : ");
+        Text tx2 = new Text("* Confirm password : ");
         tx2.setLayoutX(80);
-        tx2.setLayoutY(290);
+        tx2.setLayoutY(220);
         tx2.setFill(Color.BLACK);
         root.getChildren().add(tx2);
-        //passBx.
+
 
 
         PasswordField checkPassFl = new PasswordField();
         checkPassFl.setPromptText("confirm password");
-        checkPassFl.setLayoutY(310);
+        checkPassFl.setLayoutY(230);
         checkPassFl.setLayoutX(80);
         root.getChildren().add(checkPassFl);
 
 
-        Button ok = new Button();
-        InputStream input3 = new FileInputStream("./icons/ok.png");
-        Image background3 = new Image(input3);
-        ok.setBackground(new Background(new BackgroundImage(background3 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        ok.setPadding(new Insets(10,30,10,40));
-        ok.setTranslateY(checkPassFl.getLayoutY()+50);
-        ok.setLayoutX(checkPassFl.getLayoutX()+40);
-        root.getChildren().add(ok);
+
+        Text tx3 = new Text("Alias : ");
+        tx3.setLayoutX(80);
+        tx3.setLayoutY(290);
+        tx3.setFill(Color.BLACK);
+        root.getChildren().add(tx3);
+
+
+        PasswordField setAlias = new PasswordField();
+        setAlias.setPromptText("alias");
+        setAlias.setLayoutY(300);
+        setAlias.setLayoutX(80);
+        root.getChildren().add(setAlias);
+
+
 
 
         Button menu = new Button();
@@ -152,48 +141,6 @@ public class OpenAccount
                 }
             }
         });
-        ok.setOnAction((ActionEvent e )-> {
-
-
-            if  (passFl.getText().isEmpty()  || checkPassFl.getText().isEmpty() || chb.getItems().isEmpty())
-            {
-
-               if(passFl.getText().isEmpty())
-               {
-                   passFl.setStyle("-fx-border-color: #800000;" +
-                           "    -fx-border-width: 1px;" +
-                           "    -fx-border-style: solid;");
-               }
-               if(checkPassFl.getText().isEmpty())
-               {
-                   checkPassFl.setStyle("-fx-border-color: #800000;" +
-                           "    -fx-border-width: 1px;" +
-                           "    -fx-border-style: solid;");
-               }
-
-
-
-
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Warning");
-                alert.setHeaderText("Required Fields Empty");
-                alert.setContentText("The fields highlighted in red must be filled "
-                        + "out.\nPlease try again.");
-                alert.showAndWait();
-
-                checkPassFl.setStyle("-fx-border-color: #FFFAFA;" +
-                        "    -fx-border-width: 0px;" +
-                        "    -fx-border-style: solid;");
-
-                passFl.setStyle("-fx-border-color: #FFFAFA;" +
-                        "    -fx-border-width: 0px;" +
-                        "    -fx-border-style: solid;");
-
-
-            }
-
-        });
-
 
 
 
@@ -218,6 +165,76 @@ public class OpenAccount
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+
+        Button ok = new Button();
+
+        ok.setTranslateX(245);
+        ok.setTranslateY(230);
+
+        InputStream input3 = new FileInputStream("./icons/next.png");
+        Image background3 = new Image(input3);
+        ok.setBackground(new Background(new BackgroundImage(background3 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        ok.setPadding(new Insets(15,0,0,30));
+
+
+
+        root.getChildren().add(ok);
+
+        ok.setOnAction((ActionEvent e )-> {
+
+
+            if  (passFl.getText().isEmpty()  || checkPassFl.getText().isEmpty() )
+            {
+
+                if(passFl.getText().isEmpty())
+                {
+                    passFl.setStyle("-fx-border-color: #800000;" +
+                            "    -fx-border-width: 1px;" +
+                            "    -fx-border-style: solid;");
+                }
+                if(checkPassFl.getText().isEmpty())
+                {
+                    checkPassFl.setStyle("-fx-border-color: #800000;" +
+                            "    -fx-border-width: 1px;" +
+                            "    -fx-border-style: solid;");
+                }
+
+
+
+
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning");
+                alert.setHeaderText("Required Fields Empty");
+                alert.setContentText("The fields highlighted in red must be filled "
+                        + "out.\nPlease try again.");
+                alert.showAndWait();
+
+                checkPassFl.setStyle("-fx-border-color: #FFFAFA;" +
+                        "    -fx-border-width: 0px;" +
+                        "    -fx-border-style: solid;");
+
+                passFl.setStyle("-fx-border-color: #FFFAFA;" +
+                        "    -fx-border-width: 0px;" +
+                        "    -fx-border-style: solid;");
+
+
+            }
+            else
+            {
+                if(passFl.getText().compareTo(checkPassFl.getText())!=0)
+                {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Warning");
+                    alert.setHeaderText("Passwords don't match!");
+                    alert.setContentText("The confirmm password confirmation does not match "
+                            + "\nPlease try again.");
+                    alert.showAndWait();
+                }
+            }
+
+        });
+
+
 
 
 

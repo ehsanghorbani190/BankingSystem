@@ -148,12 +148,12 @@ public class RoundOfLuck {
 
 
       Button ok = new Button();
-      InputStream input3 = new FileInputStream("./icons/ok.png");
+      InputStream input3 = new FileInputStream("./icons/next.png");
       Image background3 = new Image(input3);
       ok.setBackground(new Background(new BackgroundImage(background3 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-      ok.setPadding(new Insets(10,30,10,40));
+      ok.setPadding(new Insets(15,0,0,30));
       ok.setTranslateY(hb.getLayoutY()+200);
-      ok.setLayoutX(hb.getLayoutX()+30);
+      ok.setLayoutX(hb.getLayoutX()+40);
       root.getChildren().add(ok);
 
 
@@ -187,7 +187,7 @@ public class RoundOfLuck {
                   }
                   case 2 :
                   {
-                      tt.setText("5 $");
+                      tt.setText("empty");
                       break;
                   }
                   case 3 :

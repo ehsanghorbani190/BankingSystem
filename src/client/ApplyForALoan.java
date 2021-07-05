@@ -81,11 +81,11 @@ public class ApplyForALoan
         ChoiceBox cb = new ChoiceBox();
         cb.setLayoutX(170);
         cb.setLayoutY(150);
-        cb.getItems().add("1000 $");
-        cb.getItems().add("2000 $");
-        cb.getItems().add("3000 $");
-        cb.getItems().add("4000 $");
-        cb.getItems().add("5000 $");
+        cb.getItems().add("1000000 ریال");
+        cb.getItems().add("2000000 ریال");
+        cb.getItems().add("3000000 ریال");
+        cb.getItems().add("4000000 ریال");
+        cb.getItems().add("5000000 ریال");
 
         //root.getChildren().add(cb);
 
@@ -100,16 +100,29 @@ public class ApplyForALoan
         ChoiceBox cb2 = new ChoiceBox();
         cb2.setLayoutX(170);
         cb2.setLayoutY(220);
-        cb2.getItems().add("1 YEAR LATER");
-        cb2.getItems().add("2 YEAR LATER");
-        cb2.getItems().add("3 YEAR LATER");
-        cb2.getItems().add("4 YEAR LATER");
-        cb2.getItems().add("5 YEAR LATER");
+        cb2.getItems().add("1 DAY LATER");
+        cb2.getItems().add("2 DAY LATER");
+        cb2.getItems().add("3 DAY LATER");
+        cb2.getItems().add("4 DAY LATER");
+        cb2.getItems().add("5 DAY LATER");
+
+        Text select3 = new Text("SOURCE CARD NUMBER : ");
+        select3.setLayoutY(400);
+        select3.setLayoutX(50);
+
+        ChoiceBox cb3 = new ChoiceBox();
+        cb2.setLayoutX(170);
+        cb2.setLayoutY(290);
+        cb2.getItems().add("1 DAY LATER");
+        cb2.getItems().add("2 DAY LATER");
+        cb2.getItems().add("3 DAY LATER");
+        cb2.getItems().add("4 DAY LATER");
+        cb2.getItems().add("5 DAY LATER");
 
         // root.getChildren().add(cb2);
         // HBox  hb = new HBox(select,cb , select2, cb2);
 
-        VBox vb = new VBox(select,cb , select2, cb2);
+        VBox vb = new VBox(select,cb , select2, cb2 , select3 , cb3);
         vb.setLayoutX(100);
         vb.setLayoutY(170);
         vb.setSpacing(10);
@@ -117,12 +130,16 @@ public class ApplyForALoan
 
 
         Button ok = new Button();
-        InputStream input3 = new FileInputStream("./icons/ok.png");
+        ok.setTranslateX(245);
+        ok.setTranslateY(230);
+
+        InputStream input3 = new FileInputStream("./icons/next.png");
         Image background3 = new Image(input3);
         ok.setBackground(new Background(new BackgroundImage(background3 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        ok.setPadding(new Insets(10,30,10,40));
-        ok.setTranslateY(300);
-        ok.setLayoutX(120);
+        ok.setPadding(new Insets(15,0,0,30));
+
+
+
         root.getChildren().add(ok);
         root.getChildren().add(vb);
 

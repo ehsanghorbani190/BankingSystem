@@ -17,6 +17,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -85,12 +86,12 @@ public class FrequentlyUsedAccount
         root.getChildren().add(text);
 
 
-        TextField scCard = new TextField();
+        ChoiceBox scCard = new ChoiceBox();
         scCard.setLayoutY(scCard.getLayoutY()+200);
         scCard.setLayoutX(80);
-        scCard.setPadding(new Insets(3,10,10,3));
+        scCard.setPadding(new Insets(0,0,0,0));
         root.getChildren().add(scCard);
-        saveCard.add(scCard.getText());
+        //saveCard.add(scCard.get);
 
 
         Text text2 = new Text("alias:");
@@ -145,8 +146,14 @@ public class FrequentlyUsedAccount
             @Override
             public void handle(ActionEvent event) {
 
-                if(alias.getText().isEmpty()|| scCard.getText().isEmpty())
+                if(alias.getText().isEmpty() || scCard.getItems().isEmpty())
                 {
+                    if(scCard.getItems().isEmpty())
+                    {
+                        scCard.setStyle("-fx-border-color: #800000;" +
+                                "    -fx-border-width: 1px;" +
+                                "    -fx-border-style: solid;");
+                    }
 
 
                     if(alias.getText().isEmpty())
@@ -157,12 +164,14 @@ public class FrequentlyUsedAccount
                     }
 
 
-                    if(scCard.getText().isEmpty())
+                  /*  if(scCard.getText().isEmpty())
                     {
                         scCard.setStyle("-fx-border-color: #800000;" +
                                 "    -fx-border-width: 1px;" +
                                 "    -fx-border-style: solid;");
                     }
+
+                   */
 
 
                     Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -215,10 +224,11 @@ public class FrequentlyUsedAccount
             @Override
             public void handle(ActionEvent event) {
 
-                for (i=0 ; i<saveCard.size() ; i++)
-                {
-                    System.out.println(saveCard.get(i));
-                    System.out.println(saveAlias.get(i));
+               primaryStage.close();
+                try {
+                    ShowAlias sa = new ShowAlias(primaryStage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 }
             }
         });

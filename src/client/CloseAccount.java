@@ -15,10 +15,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -72,62 +69,73 @@ public class CloseAccount
         );
         root.getChildren().add(rect);
 
-        Text text = new Text("Password :");
-        text.setLayoutX(130);
-        text.setLayoutY(140);
+
+        Text text = new Text("Selected card number:");
+        text.setLayoutX(80);
+        text.setLayoutY(130);
         text.setFill(Color.GRAY);
         root.getChildren().add(text);
+
+
+        ChoiceBox scCard = new ChoiceBox();
+        scCard.setLayoutY(150);
+        scCard.setLayoutX(100);
+        scCard.setPadding(new Insets(0,30,-5,30));
+        root.getChildren().add(scCard);
+
+        Text text2 = new Text("Password :");
+        text2.setLayoutX(80);
+        text2.setLayoutY(195);
+        text2.setFill(Color.GRAY);
+        root.getChildren().add(text2);
 
 
 
         PasswordField pass = new PasswordField();
         pass.setPromptText("password");
-        pass.setLayoutY(pass.getLayoutY()+150);
+        pass.setLayoutY(210);
         pass.setLayoutX(80);
         root.getChildren().add(pass);
 
 
-        Button bt = new Button();
-        InputStream input2 = new FileInputStream("./icons/ok.png");
-        Image background2 = new Image(input2);
-        bt.setBackground(new Background(new BackgroundImage(background2 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        bt.setPadding(new Insets(10,30,10,40));
-        bt.setFont(Font.font("T", FontWeight.LIGHT, FontPosture.ITALIC, 15));
-        bt.setTranslateY(pass.getLayoutY()+30);
-        bt.setLayoutX(pass.getLayoutX()+40);
-        root.getChildren().add(bt);
 
-
-        Text text2 = new Text("If the account is not empty, transfer the current balance\n to the card whose number you enter!");
-        text2.setFont(Font.font("T", FontWeight.LIGHT, FontPosture.ITALIC, 10));
-        text2.setLayoutX(35);
-        text2.setLayoutY(240);
-        text2.setFill(Color.RED);
-        root.getChildren().add(text2);
-
-
-        Text text3 = new Text("Destination card number :");
-        text3.setLayoutX(80);
-        text3.setLayoutY(300);
-        text3.setFill(Color.GRAY);
+        Text text3 = new Text("\t  If the account is not empty\n,\t transfer the current balance\n to the card whose number you enter!");
+        text3.setFont(Font.font("T", FontWeight.LIGHT, FontPosture.ITALIC, 10));
+        text3.setLayoutX(75);
+        text3.setLayoutY(340);
+        text3.setFill(Color.RED);
         root.getChildren().add(text3);
+
+
+        Text text4 = new Text("Destination card number :");
+        text4.setLayoutX(80);
+        text4.setLayoutY(270);
+        text4.setFill(Color.GRAY);
+        root.getChildren().add(text4);
 
 
 
         TextField card = new TextField();
         card.setPromptText("destination card");
-        card.setLayoutY(310);
+        card.setLayoutY(280);
         card.setLayoutX(80);
         root.getChildren().add(card);
 
+
         Button ok = new Button();
-        InputStream input3 = new FileInputStream("./icons/ok.png");
+        ok.setTranslateX(245);
+        ok.setTranslateY(230);
+
+        InputStream input3 = new FileInputStream("./icons/next.png");
         Image background3 = new Image(input3);
         ok.setBackground(new Background(new BackgroundImage(background3 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        ok.setPadding(new Insets(10,30,10,40));
-        ok.setTranslateY(card.getLayoutY()+30);
-        ok.setLayoutX(card.getLayoutX()+40);
+        ok.setPadding(new Insets(15,0,0,30));
+
+
+
         root.getChildren().add(ok);
+
+
 
 
         Button menu = new Button();
@@ -149,11 +157,12 @@ public class CloseAccount
                 }
             }
         });
+
         ok.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
 
-                if(pass.getText().isEmpty()|| card.getText().isEmpty())
+                if(pass.getText().isEmpty()|| card.getText().isEmpty() || scCard.getItems().isEmpty())
                 {
                     if(pass.getText().isEmpty())
                     {
@@ -164,6 +173,12 @@ public class CloseAccount
                     if(card.getText().isEmpty())
                     {
                         card.setStyle("-fx-border-color: #800000;" +
+                                "    -fx-border-width: 1px;" +
+                                "    -fx-border-style: solid;");
+                    }
+                    if(scCard.getItems().isEmpty())
+                    {
+                        scCard.setStyle("-fx-border-color: #800000;" +
                                 "    -fx-border-width: 1px;" +
                                 "    -fx-border-style: solid;");
                     }
@@ -195,41 +210,6 @@ public class CloseAccount
             }
         });
 
-        bt.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-
-                if(pass.getText().isEmpty())
-                {
-                      pass.setStyle("-fx-border-color: #800000;" +
-                                "    -fx-border-width: 1px;" +
-                                "    -fx-border-style: solid;");
-
-
-
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Warning");
-                    alert.setHeaderText("Required Field Empty");
-                    alert.setContentText("The field highlighted in red must be filled "
-                            + "out.\nPlease try again.");
-                    alert.showAndWait();
-
-                    pass.setStyle("-fx-border-color: #FFFAFA;" +
-                            "    -fx-border-width: 0px;" +
-                            "    -fx-border-style: solid;");
-
-                }
-                else
-                {
-                    Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-                    alert2.setTitle("Successfuly");
-                    alert2.setHeaderText("Successful close account");
-                    alert2.showAndWait();
-                }
-
-
-            }
-        });
 
 
         primaryStage.setTitle("close account");

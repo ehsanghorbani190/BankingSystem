@@ -94,6 +94,47 @@ public class SignUp
                 }
             }
         });
+
+
+        VBox vb = new VBox(usernameBx , mailBx , passBx , checkPassBx , phoneBx  , bt);
+        vb.setLayoutX(60);
+        vb.setLayoutY(90);
+        vb.setSpacing(-11);
+
+        InputStream input2 = new FileInputStream("./pics/back6.png");
+        Image background2 = new Image(input2);
+        ImageView backgroundView = new ImageView(background2);
+        backgroundView.setLayoutX(-5);
+        backgroundView.setLayoutY(-90);
+        backgroundView.setPreserveRatio(false);
+
+        root.getChildren().add(backgroundView);
+
+
+        Button exit = new Button();
+        exit.setLayoutX(25);
+        exit.setLayoutY(210);
+
+        InputStream ex = new FileInputStream("./icons/back.png");
+        Image backEx = new Image(ex);
+        exit.setBackground(new Background(new BackgroundImage(backEx , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,BackgroundSize.DEFAULT)));
+        exit.setPadding(new Insets(5,0,0,25));
+        exit.setFont(Font.font("T", FontWeight.LIGHT, FontPosture.ITALIC, 15));
+
+
+        root.getChildren().add(exit);
+
+        exit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    primaryStage.close();
+                    LogIn lg = new LogIn(primaryStage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         bt.setOnAction((ActionEvent e )-> {
 
 
@@ -155,31 +196,29 @@ public class SignUp
                         "    -fx-border-width: 0px;" +
                         "    -fx-border-style: solid;");
             }
-
             else
             {
-                primaryStage.close();
-                try {
-                    LogIn lg = new LogIn(primaryStage);
-                } catch (FileNotFoundException problem) {
-                    problem.printStackTrace();
+                if(passFl.getText().compareTo(checkPassFl.getText())!=0)
+                {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Warning");
+                    alert.setHeaderText("Passwords don't match!");
+                    alert.setContentText("The confirmm password confirmation does not match "
+                            + "\nPlease try again.");
+                    alert.showAndWait();
+                }
+                else
+                {
+                    primaryStage.close();
+                    try {
+                        UserPanel up = new UserPanel(primaryStage);
+                    } catch (FileNotFoundException problem) {
+                        problem.printStackTrace();
+                    }
                 }
             }
+
         });
-
-        VBox vb = new VBox(usernameBx , mailBx , passBx , checkPassBx , phoneBx  , bt);
-        vb.setLayoutX(60);
-        vb.setLayoutY(90);
-        vb.setSpacing(-11);
-
-        InputStream input2 = new FileInputStream("./pics/back6.png");
-        Image background2 = new Image(input2);
-        ImageView backgroundView = new ImageView(background2);
-        backgroundView.setLayoutX(-5);
-        backgroundView.setLayoutY(-90);
-        backgroundView.setPreserveRatio(false);
-
-        root.getChildren().add(backgroundView);
 
         root.getChildren().add(vb);
         Scene scene = new Scene(root);

@@ -1,5 +1,6 @@
 package client;
 
+import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -14,17 +15,11 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -78,24 +73,7 @@ public class ViewAccountInformation
         );
         root.getChildren().add(rect);
 
-/*
-        TableView table = new TableView();
-
-        TableColumn type = new TableColumn("Account type");
-        TableColumn inventory = new TableColumn("Inventory");
-        TableColumn lot = new TableColumn("transactions");
-
-        Button bt = new Button("show");
-
-
-        table.getColumns().addAll(type, inventory, lot);
-        VBox vb = new VBox(table);
-        vb.setPadding(new Insets(140, 0, 30, 30));
-        vb.setPrefHeight(200);
-        root.getChildren().add(vb);
-
- */
-
+        /*
 
         Text type = new Text("account type");
         Text inventory = new Text("Inventory");
@@ -134,6 +112,47 @@ public class ViewAccountInformation
         TRrect.setStroke(Color.LIGHTBLUE);
         root.getChildren().add(TRrect);
 
+         */
+
+        Text selectCard = new Text("select card number : ");
+        selectCard.setLayoutX(80);
+        selectCard.setLayoutY(130);
+        root.getChildren().add(selectCard);
+
+        ChoiceBox chb = new ChoiceBox();
+
+        chb.setLayoutX(200);
+        chb.setLayoutY(115);
+
+        root.getChildren().add(chb);
+
+        Rectangle ScRect = new Rectangle();
+       // ScRect.setStroke(Color.BLACK);
+        ScRect.setFill(Color.LAVENDERBLUSH);
+        ScRect.setLayoutY(150);
+        ScRect.setLayoutX(47);
+        ScRect.setWidth(220);
+        ScRect.setHeight(230);
+        root.getChildren().add(ScRect);
+
+
+        Text alias = new Text("alias : ");
+        Text aliasAmount  = new Text("     ");
+
+        Text inventory = new Text("inventory : ");
+        Text inventoryAmount  = new Text("     ");
+
+        HBox hb = new HBox(alias,aliasAmount,inventory,inventoryAmount);
+        hb.setTranslateX(80);
+        hb.setLayoutY(170);
+        hb.setSpacing(20);
+        root.getChildren().add(hb);
+
+        Button show = new Button("show transaction");
+        show.setTranslateY(250);
+        show.setLayoutX(100);
+        root.getChildren().add(show);
+
 
         Button menu = new Button();
         InputStream input4 = new FileInputStream("./icons/mennu.png");
@@ -149,6 +168,17 @@ public class ViewAccountInformation
                 try {
                     primaryStage.close();
                     UserPanel up = new UserPanel(primaryStage);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        show.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    primaryStage.close();
+                    ShowTransaction st = new ShowTransaction(primaryStage);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
