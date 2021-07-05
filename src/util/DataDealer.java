@@ -5,16 +5,15 @@ import java.util.HashMap;
 public class DataDealer {
     private int status;
     private HashMap<String,String> data;
-    private String err;
     public DataDealer(int status , String err){
         this.status = status;
-        this.err = err;
+        if(err!=null) addData("error", err);
     }
     /**
-     * @return the err
+     * @return the error
      */
-    public String getErr() {
-        return err;
+    public String getError() {
+        return getData("error");
     }
     /**
      * @return the data
