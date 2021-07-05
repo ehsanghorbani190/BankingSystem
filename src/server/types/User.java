@@ -59,6 +59,7 @@ public class User implements Identifiable {
         }
         return res;
     }
+
     /**
      * @return the email
      */
@@ -146,7 +147,6 @@ public class User implements Identifiable {
         if (temp == null || !temp.login(password))
             return;
         temp.delete(password, toID);
-        update();
     }
 
     public void addAccountToFavorites(int id) {
@@ -154,7 +154,6 @@ public class User implements Identifiable {
         if (temp == null)
             return;
         temp.setFavorite(true);
-        update();
     }
 
     public void addAliasTo(int id, String alias) {
@@ -162,7 +161,6 @@ public class User implements Identifiable {
         if (temp == null)
             return;
         temp.setAlias(alias);
-        update();
     }
 
     // !SECTION
@@ -170,9 +168,7 @@ public class User implements Identifiable {
         Account temp = getAccount(from);
         if (temp == null || !temp.login(password))
             return false;
-        boolean i = temp.transfer(password, to, val);
-        update();
-        return i;
+        return temp.transfer(password, to, val);
 
     }
 
@@ -196,12 +192,13 @@ public class User implements Identifiable {
             return false;
         return temp.payBill(code, payCode);
     }
+
     // NOTE File methods
-    public boolean delete() {
+    public synchronized boolean delete() {
         return Filer.delete(getUniqueID(), User.class);
     }
 
-    public void update() {
+    public synchronized void update() {
         Filer.<User>write(this);
     }
 

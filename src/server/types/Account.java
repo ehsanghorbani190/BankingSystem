@@ -120,7 +120,7 @@ public class Account implements Identifiable {
 
     // !SECTION
     // NOTE File methods
-    public boolean delete(String password, String toID) {
+    public synchronized boolean delete(String password, String toID) {
         if (login(password)) {
             if (getBalance() != 0)
                 transfer(password, toID, balance);
@@ -129,12 +129,12 @@ public class Account implements Identifiable {
             return false;
     }
 
-    public void update() {
+    public synchronized void update() {
         Filer.<Account>write(this);
     }
 
     // SECTION - Money methods
-    public boolean addMoney(long val) {
+    public synchronized boolean addMoney(long val) {
         if (val < 0)
             return false;
         balance += val;
@@ -144,7 +144,7 @@ public class Account implements Identifiable {
         return true;
     }
 
-    public boolean getMoney(long val) {
+    public synchronized boolean getMoney(long val) {
         if (val > balance || val < 0)
             return false;
         balance -= val;
@@ -154,7 +154,7 @@ public class Account implements Identifiable {
         return true;
     }
 
-    public boolean transfer(String password, String toID, long val) {
+    public synchronized boolean transfer(String password, String toID, long val) {
         Account to = Filer.<Account>read(toID, Account.class);
         if (to == null || val < 0 || val > balance || !login(password))
             return false;
@@ -169,7 +169,7 @@ public class Account implements Identifiable {
         return true;
     }
 
-    public boolean payBill(String code, String payCode) {
+    public synchronized boolean payBill(String code, String payCode) {
         if (code == null || payCode == null || code.length() != 13 || payCode.length() != 8)
             return false;
         balance -= (code.hashCode() + payCode.hashCode()) / 100;
