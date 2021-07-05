@@ -15,6 +15,9 @@ public class DataDealer {
     public String getError() {
         return getData("error");
     }
+    public void setError(String err){
+        addData("error", err);
+    }
     /**
      * @return the data
      */
