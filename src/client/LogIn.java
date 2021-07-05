@@ -109,8 +109,8 @@ public class LogIn {
             public void handle(ActionEvent event) {
                 try {
                     primaryStage.close();
-                    new DepositOrWithdraw(primaryStage);
-                    //SignUp sg = new SignUp(primaryStage);
+
+                    SignUp sg = new SignUp(primaryStage);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
