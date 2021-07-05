@@ -5,3 +5,4 @@
 /.idea/
 out/
 bank2.iml
+*.class
