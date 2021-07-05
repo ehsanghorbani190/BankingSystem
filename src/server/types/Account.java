@@ -17,7 +17,7 @@ public class Account implements Identifiable {
 
     public Account(String id, String password, boolean isFavorite, String alias) {
         try {
-            this.balance = 0;
+            this.balance = 10000;
             this.isFavorite = isFavorite;
             this.alias = alias;
             this.id = id;
