@@ -22,7 +22,7 @@ public class ClientHand {
         }
     }
 
-    public boolean send(Object obj) {
+    public boolean send(DataDealer obj) {
         try {
             if (out == null)
                 return false;
