@@ -200,10 +200,9 @@ public class SignUp {
                     alert.showAndWait();
                 } else {
                     DataDealer req = new DataDealer(1);
-                    req.addData("melliCode", usernamFl.getText());
+                    req.addData("melliCode", nlCode.getText());
                     req.addData("password", passFl.getText());
-                    //TODO add mellicode fileld
-                    //req.addData("name", "ehsan");
+                    req.addData("name", usernamFl.getText());
                     req.addData("email", mailFl.getText());
                     req.addData("phone", phoneFl.getText());
                     Client.ch.send(req);
