@@ -9,6 +9,8 @@ import java.util.Calendar;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -149,11 +151,6 @@ public class ViewAccountInformation {
         hb.setSpacing(20);
         root.getChildren().add(hb);
 
-        Button button = new Button("show");
-        button.setTranslateY(220);
-        button.setTranslateX(100);
-        root.getChildren().add(button);
-
         Button show = new Button("show transaction");
         show.setTranslateY(250);
         show.setLayoutX(100);
@@ -168,27 +165,28 @@ public class ViewAccountInformation {
         menu.setTranslateY(0);
         menu.setLayoutX(267);
         root.getChildren().add(menu);
-        // chb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-        //     @Override
-        //     public void changed(ObservableValue<? extends Number> observableValue, Number old, Number newVal) {
-        //         String id = (String) chb.getItems().get((Integer) newVal);
-        //         DataDealer req = new DataDealer(3);
-        //         req.addData("id", id);
-        //         Client.ch.send(req);
-        //         DataDealer res = Client.ch.recieve();
-        //         if (res.getStatus() == 203) {
-        //             aliasAmount.setText(res.getData("alias"));
-        //             inventoryAmount.setText(res.getData("balance"));
-        //         } else {
-        //             Alert a = new Alert(AlertType.ERROR);
-        //             a.setTitle("Error");
-        //             a.setHeaderText("Error " + res.getStatus());
-        //             a.setContentText(res.getError());
-        //             a.showAndWait();
-        //         }
-        //     }
-        // });
         
+        chb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number old, Number newVal) {
+                String id = (String) chb.getItems().get((Integer) newVal);
+                DataDealer req = new DataDealer(3);
+                req.addData("id", id);
+                Client.ch.send(req);
+                DataDealer res = Client.ch.recieve();
+                if (res.getStatus() == 203) {
+                    aliasAmount.setText(res.getData("alias"));
+                    inventoryAmount.setText(res.getData("balance"));
+                } else {
+                    Alert a = new Alert(AlertType.ERROR);
+                    a.setTitle("Error");
+                    a.setHeaderText("Error " + res.getStatus());
+                    a.setContentText(res.getError());
+                    a.showAndWait();
+                }
+            }
+        });
+
         menu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
