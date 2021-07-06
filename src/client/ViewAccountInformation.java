@@ -149,6 +149,11 @@ public class ViewAccountInformation {
         hb.setSpacing(20);
         root.getChildren().add(hb);
 
+        Button button = new Button("show");
+        button.setTranslateY(220);
+        button.setTranslateX(100);
+        root.getChildren().add(button);
+
         Button show = new Button("show transaction");
         show.setTranslateY(250);
         show.setLayoutX(100);
