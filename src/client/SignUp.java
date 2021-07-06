@@ -47,6 +47,12 @@ public class SignUp
         usernameBx.setPadding(new Insets(20,20,20,20));
         usernameBx.setAlignment(Pos.BOTTOM_RIGHT);
 
+        TextField nlCode = new TextField();
+        nlCode.setPromptText("national code");
+        HBox nlBx = new HBox( nlCode);
+        nlBx.setPadding(new Insets(20,20,20,20));
+        nlBx.setAlignment(Pos.BOTTOM_RIGHT);
+
         PasswordField passFl = new PasswordField();
         passFl.setPromptText("password");
         HBox passBx = new HBox( passFl);
@@ -73,30 +79,10 @@ public class SignUp
         mailBx.setAlignment(Pos.BOTTOM_RIGHT);
 
 
-        Button bt = new Button();
-        InputStream input = new FileInputStream("./icons/button3.png");
-        Image background = new Image(input);
-        bt.setBackground(new Background(new BackgroundImage(background , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,BackgroundSize.DEFAULT)));
-        bt.setPadding(new Insets(10,50,10,50));
-        bt.setFont(Font.font("T", FontWeight.LIGHT, FontPosture.ITALIC, 15));
-        bt.setTranslateX(45);
-        bt.setTranslateY(25);
-        bt.setTextFill(Color.MIDNIGHTBLUE);
-
-        bt.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    primaryStage.close();
-                    LogIn Lg = new LogIn(primaryStage);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
 
 
-        VBox vb = new VBox(usernameBx , mailBx , passBx , checkPassBx , phoneBx  , bt);
+
+        VBox vb = new VBox(usernameBx ,nlBx, mailBx , passBx , checkPassBx , phoneBx );
         vb.setLayoutX(60);
         vb.setLayoutY(90);
         vb.setSpacing(-11);
@@ -112,13 +98,13 @@ public class SignUp
 
 
         Button exit = new Button();
-        exit.setLayoutX(25);
-        exit.setLayoutY(210);
+        exit.setLayoutX(20);
+        exit.setLayoutY(235);
 
         InputStream ex = new FileInputStream("./icons/back.png");
         Image backEx = new Image(ex);
         exit.setBackground(new Background(new BackgroundImage(backEx , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,BackgroundSize.DEFAULT)));
-        exit.setPadding(new Insets(5,0,0,25));
+        exit.setPadding(new Insets(15,0,0,30));
         exit.setFont(Font.font("T", FontWeight.LIGHT, FontPosture.ITALIC, 15));
 
 
@@ -135,15 +121,32 @@ public class SignUp
                 }
             }
         });
+
+        Button bt = new Button();
+        InputStream input = new FileInputStream("./icons/next.png");
+        Image background = new Image(input);
+        bt.setBackground(new Background(new BackgroundImage(background , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,BackgroundSize.DEFAULT)));
+        bt.setPadding(new Insets(15,0,0,30));
+        bt.setTranslateX(257);
+        bt.setTranslateY(240);
+        root.getChildren().add(bt);
+
         bt.setOnAction((ActionEvent e )-> {
 
 
-            if  (usernamFl.getText().isEmpty() || passFl.getText().isEmpty() || mailFl.getText().isEmpty() || phoneFl.getText().isEmpty() || checkPassFl.getText().isEmpty())
+            if  (usernamFl.getText().isEmpty() || passFl.getText().isEmpty() || mailFl.getText().isEmpty() || phoneFl.getText().isEmpty() || checkPassFl.getText().isEmpty() || nlCode.getText().isEmpty())
             {
 
                 if (usernamFl.getText().isEmpty())
                 {
                     usernamFl.setStyle("-fx-border-color: #800000;" +
+                            "    -fx-border-width: 1px;" +
+                            "    -fx-border-style: solid;");
+                }
+
+                if (nlCode.getText().isEmpty())
+                {
+                    nlCode.setStyle("-fx-border-color: #800000;" +
                             "    -fx-border-width: 1px;" +
                             "    -fx-border-style: solid;");
                 }
@@ -183,6 +186,11 @@ public class SignUp
                 usernamFl.setStyle("-fx-border-color: #FFFAFA;" +
                         "    -fx-border-width: 0px;" +
                         "    -fx-border-style: solid;");
+
+                nlCode.setStyle("-fx-border-color: #FFFAFA;" +
+                        "    -fx-border-width: 0px;" +
+                        "    -fx-border-style: solid;");
+
                 passFl.setStyle("-fx-border-color: #FFFAFA;" +
                         "    -fx-border-width: 0px;" +
                         "    -fx-border-style: solid;");
@@ -219,6 +227,9 @@ public class SignUp
             }
 
         });
+
+
+
 
         root.getChildren().add(vb);
         Scene scene = new Scene(root);
