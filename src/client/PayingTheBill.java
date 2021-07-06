@@ -206,11 +206,25 @@ public class PayingTheBill
                 }
                 else
                 {
-                    Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-                    alert2.setTitle("Successfuly");
-                    alert2.setHeaderText("Successful paying the bill");
-                    alert2.setContentText("You can see the changes in the 'Account Information' section");
-                    alert2.showAndWait();
+                    DataDealer req = new DataDealer(9);
+                    req.addData("id", (String) scCard.getValue());
+                    req.addData("code", bId.getText());
+                    req.addData("payCode", pCode.getText());
+                    Client.ch.send(req);
+                    DataDealer res = Client.ch.recieve();
+                    if (res.getStatus() == 209) {
+                        Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                        alert2.setTitle("Successful");
+                        alert2.setHeaderText("Successfully payed Bill from " + (String) scCard.getValue());
+                        alert2.setContentText("You can see the changes in the 'Account Information' section");
+                        alert2.showAndWait();
+                    } else {
+                        Alert a = new Alert(AlertType.ERROR);
+                        a.setTitle("Error");
+                        a.setHeaderText("Error " + res.getStatus());
+                        a.setContentText(res.getError());
+                        a.showAndWait();
+                    }
                 }
 
 
