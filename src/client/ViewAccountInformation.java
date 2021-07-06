@@ -141,15 +141,19 @@ public class ViewAccountInformation {
 
         Text alias = new Text("alias : ");
         Text aliasAmount = new Text("     ");
+        HBox hb1 = new HBox(alias,aliasAmount);
 
         Text inventory = new Text("inventory : ");
         Text inventoryAmount = new Text("     ");
+        HBox hb2 = new HBox(inventory,inventoryAmount);
 
-        HBox hb = new HBox(alias, aliasAmount, inventory, inventoryAmount);
-        hb.setTranslateX(80);
-        hb.setLayoutY(170);
-        hb.setSpacing(20);
-        root.getChildren().add(hb);
+        VBox vb = new VBox(hb1 , hb2);
+        vb.setTranslateX(80);
+        vb.setLayoutY(170);
+        vb.setSpacing(20);
+
+        root.getChildren().add(vb);
+
 
         Button show = new Button("show transaction");
         show.setTranslateY(250);
