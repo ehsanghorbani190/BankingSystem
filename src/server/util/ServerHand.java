@@ -150,7 +150,7 @@ public class ServerHand implements Runnable {
                             } else {
                                 boolean i = user.transfer(request.getData("id"),
                                         request.getData("password"), request.getData("dest"),
-                                        Long.parseLong(request.getData("ueue")));
+                                        Long.parseLong(request.getData("value")));
                                 if (i) {
                                     response.setStatus(208);
                                 } else {
