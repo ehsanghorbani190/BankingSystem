@@ -42,7 +42,7 @@ public class SignUp
     SignUp(Stage primaryStage) throws FileNotFoundException {
         Group root = new Group();
         TextField usernamFl = new TextField();
-        usernamFl.setPromptText("username");
+        usernamFl.setPromptText("name");
         HBox usernameBx = new HBox( usernamFl);
         usernameBx.setPadding(new Insets(20,20,20,20));
         usernameBx.setAlignment(Pos.BOTTOM_RIGHT);
