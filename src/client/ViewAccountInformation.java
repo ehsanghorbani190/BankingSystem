@@ -40,11 +40,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import util.DataDealer;
 
-public class ViewAccountInformation
-{
+public class ViewAccountInformation {
 
-    public ViewAccountInformation(Stage primaryStage)throws FileNotFoundException
-    {
+    public ViewAccountInformation(Stage primaryStage) throws FileNotFoundException {
         Group root = new Group();
         Scene scene = new Scene(root);
 
@@ -64,7 +62,6 @@ public class ViewAccountInformation
         txt.setFill(Color.WHITE);
         root.getChildren().add(txt);
 
-
         Rectangle rect = new Rectangle();
         rect.setHeight(300);
         rect.setWidth(250);
@@ -72,53 +69,38 @@ public class ViewAccountInformation
         rect.setLayoutX(30);
         rect.setStroke(Color.BLACK);
         rect.setFill(Color.WHITE);
-        rect.setFill(new LinearGradient(
-                0, 0, 1, 1, true,                      //sizing
-                CycleMethod.NO_CYCLE,                  //cycling
-                new Stop(0, Color.web("#FFFFFF")),     //colors
-                new Stop(1, Color.web("#F5F5F5")))//  #ADD8E6
+        rect.setFill(new LinearGradient(0, 0, 1, 1, true, // sizing
+                CycleMethod.NO_CYCLE, // cycling
+                new Stop(0, Color.web("#FFFFFF")), // colors
+                new Stop(1, Color.web("#F5F5F5")))// #ADD8E6
         );
         root.getChildren().add(rect);
 
         /*
-
-        Text type = new Text("account type");
-        Text inventory = new Text("Inventory");
-        Text transaction = new Text("transactions");
-
-        type.setLayoutY(120);
-        inventory.setLayoutY(120);
-        transaction.setLayoutY(120);
-        type.setLayoutX(40);
-        inventory.setLayoutX(130);
-        transaction.setLayoutX(200);
-
-        root.getChildren().addAll(type,inventory,transaction);
-
-
-        Rectangle Trect = new Rectangle(80,250);
-        Trect.setTranslateX(35);
-        Trect.setLayoutY(140);
-        Trect.setFill(Color.GRAY);
-        Trect.setStroke(Color.LIGHTBLUE);
-        root.getChildren().add(Trect);
-
-
-        Rectangle Irect = new Rectangle(80,250);
-        Irect.setTranslateX(115);
-        Irect.setLayoutY(140);
-        Irect.setFill(Color.GRAY);
-        Irect.setStroke(Color.LIGHTBLUE);
-        root.getChildren().add(Irect);
-
-
-        Rectangle TRrect = new Rectangle(80,250);
-        TRrect.setTranslateX(195);
-        TRrect.setLayoutY(140);
-        TRrect.setFill(Color.GRAY);
-        TRrect.setStroke(Color.LIGHTBLUE);
-        root.getChildren().add(TRrect);
-
+         * 
+         * Text type = new Text("account type"); Text inventory = new Text("Inventory");
+         * Text transaction = new Text("transactions");
+         * 
+         * type.setLayoutY(120); inventory.setLayoutY(120); transaction.setLayoutY(120);
+         * type.setLayoutX(40); inventory.setLayoutX(130); transaction.setLayoutX(200);
+         * 
+         * root.getChildren().addAll(type,inventory,transaction);
+         * 
+         * 
+         * Rectangle Trect = new Rectangle(80,250); Trect.setTranslateX(35);
+         * Trect.setLayoutY(140); Trect.setFill(Color.GRAY);
+         * Trect.setStroke(Color.LIGHTBLUE); root.getChildren().add(Trect);
+         * 
+         * 
+         * Rectangle Irect = new Rectangle(80,250); Irect.setTranslateX(115);
+         * Irect.setLayoutY(140); Irect.setFill(Color.GRAY);
+         * Irect.setStroke(Color.LIGHTBLUE); root.getChildren().add(Irect);
+         * 
+         * 
+         * Rectangle TRrect = new Rectangle(80,250); TRrect.setTranslateX(195);
+         * TRrect.setLayoutY(140); TRrect.setFill(Color.GRAY);
+         * TRrect.setStroke(Color.LIGHTBLUE); root.getChildren().add(TRrect);
+         * 
          */
 
         Text selectCard = new Text("select card number : ");
@@ -130,14 +112,13 @@ public class ViewAccountInformation
         DataDealer d = new DataDealer(2);
         Client.ch.send(d);
         d = Client.ch.recieve();
-        if(d.getStatus() == 202){
+        if (d.getStatus() == 202) {
             String id = d.getData("0");
-            for (int i = 1; id != null ; i++) {
+            for (int i = 1; id != null; i++) {
                 chb.getItems().add(id);
                 id = d.getData(String.valueOf(i));
             }
-        }
-        else{
+        } else {
             Alert a = new Alert(AlertType.WARNING);
             a.setTitle("Warning");
             a.setContentText(d.getError());
@@ -148,7 +129,7 @@ public class ViewAccountInformation
         root.getChildren().add(chb);
 
         Rectangle ScRect = new Rectangle();
-       // ScRect.setStroke(Color.BLACK);
+        // ScRect.setStroke(Color.BLACK);
         ScRect.setFill(Color.LAVENDERBLUSH);
         ScRect.setLayoutY(150);
         ScRect.setLayoutX(47);
@@ -156,14 +137,13 @@ public class ViewAccountInformation
         ScRect.setHeight(230);
         root.getChildren().add(ScRect);
 
-
         Text alias = new Text("alias : ");
-        Text aliasAmount  = new Text("     ");
+        Text aliasAmount = new Text("     ");
 
         Text inventory = new Text("inventory : ");
-        Text inventoryAmount  = new Text("     ");
+        Text inventoryAmount = new Text("     ");
 
-        HBox hb = new HBox(alias,aliasAmount,inventory,inventoryAmount);
+        HBox hb = new HBox(alias, aliasAmount, inventory, inventoryAmount);
         hb.setTranslateX(80);
         hb.setLayoutY(170);
         hb.setSpacing(20);
@@ -174,15 +154,36 @@ public class ViewAccountInformation
         show.setLayoutX(100);
         root.getChildren().add(show);
 
-
         Button menu = new Button();
         InputStream input4 = new FileInputStream("./icons/mennu.png");
         Image background4 = new Image(input4);
-        menu.setBackground(new Background(new BackgroundImage(background4 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        menu.setPadding(new Insets(15,10,0,25));
+        menu.setBackground(new Background(new BackgroundImage(background4, BackgroundRepeat.REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        menu.setPadding(new Insets(15, 10, 0, 25));
         menu.setTranslateY(0);
         menu.setLayoutX(267);
         root.getChildren().add(menu);
+        // chb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+        //     @Override
+        //     public void changed(ObservableValue<? extends Number> observableValue, Number old, Number newVal) {
+        //         String id = (String) chb.getItems().get((Integer) newVal);
+        //         DataDealer req = new DataDealer(3);
+        //         req.addData("id", id);
+        //         Client.ch.send(req);
+        //         DataDealer res = Client.ch.recieve();
+        //         if (res.getStatus() == 203) {
+        //             aliasAmount.setText(res.getData("alias"));
+        //             inventoryAmount.setText(res.getData("balance"));
+        //         } else {
+        //             Alert a = new Alert(AlertType.ERROR);
+        //             a.setTitle("Error");
+        //             a.setHeaderText("Error " + res.getStatus());
+        //             a.setContentText(res.getError());
+        //             a.showAndWait();
+        //         }
+        //     }
+        // });
+        
         menu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -206,9 +207,7 @@ public class ViewAccountInformation
             }
         });
 
-
         primaryStage.setTitle("account information");
-
 
         primaryStage.setHeight(480);
         primaryStage.setWidth(320);
@@ -218,10 +217,9 @@ public class ViewAccountInformation
 
         Text clock = new Text();
         DateFormat format = DateFormat.getInstance();
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1),new EventHandler<ActionEvent>() {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event)
-            {
+            public void handle(ActionEvent event) {
                 Calendar cal = Calendar.getInstance();
                 clock.setText(format.format(cal.getTime()));
                 clock.setFill(Color.BLACK);
@@ -231,8 +229,6 @@ public class ViewAccountInformation
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
-
-
 
         VBox vx = new VBox(clock);
         vx.setLayoutX(90);
