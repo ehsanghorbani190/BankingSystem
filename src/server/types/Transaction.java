@@ -27,7 +27,12 @@ public class Transaction implements Identifiable {
     public String getType() {
         return type;
     }
-
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
     /**
      * @return the val
      */
