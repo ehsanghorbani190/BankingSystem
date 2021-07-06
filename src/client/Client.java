@@ -10,8 +10,8 @@ import javafx.stage.Stage;
 public class Client extends Application {
     public static ClientHand ch;
     public static void main(String[] args) {
-        launch(args);
         ch = new ClientHand();
+        launch(args); 
     }
     
     @Override
