@@ -141,10 +141,10 @@ public class ShowTransaction {
 
     }
     public class tr {
-        public String id;
-        public String val;
-        public String type;
-        public String date;
+        private String id;
+        private String val;
+        private String type;
+        private String date;
     
         /**
          * @param id

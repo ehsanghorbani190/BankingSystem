@@ -86,9 +86,12 @@ public class ServerHand implements Runnable {
                                 response.setStatus(504);
                                 response.setError("No Favorite Account found");
                             } else {
-                                for (int i = 0; i < fAccounts.size(); i++)
-                                    response.addData(String.valueOf(i), fAccounts.get(i).getUniqueID());
-                                response.setStatus(202);
+                                for (int i = 0; i < fAccounts.size(); i++) {
+                                    response.addData(i + "d", fAccounts.get(i).getUniqueID());
+                                    response.addData(i + "b", String.valueOf(fAccounts.get(i).getBalance()));
+                                    response.addData(i + "a", fAccounts.get(i).getAlias());
+                                }
+                                response.setStatus(204);
                             }
                             break;
                         case 5:// NOTE 5 for Getting Transactions of an account
@@ -148,9 +151,8 @@ public class ServerHand implements Runnable {
                                 response.setError("Invalid Credentials");
                                 response.setStatus(5080);
                             } else {
-                                boolean i = user.transfer(request.getData("id"),
-                                        request.getData("password"), request.getData("dest"),
-                                        Long.parseLong(request.getData("value")));
+                                boolean i = user.transfer(request.getData("id"), request.getData("password"),
+                                        request.getData("dest"), Long.parseLong(request.getData("value")));
                                 if (i) {
                                     response.setStatus(208);
                                 } else {
@@ -164,8 +166,8 @@ public class ServerHand implements Runnable {
                                 response.setError("Provide an ID");
                                 response.setStatus(5090);
                             } else {
-                                boolean i = user.payBill(request.getData("id"),
-                                        request.getData("code"), request.getData("paycode"));
+                                boolean i = user.payBill(request.getData("id"), request.getData("code"),
+                                        request.getData("paycode"));
                                 if (i) {
                                     response.setStatus(209);
                                 } else {
@@ -175,12 +177,12 @@ public class ServerHand implements Runnable {
                             }
                             break;
                         case 10:// NOTE 10 for Loan
-                            if (request.getData("id") == null || request.getData("value") == null || request.getData("period") == null) {
+                            if (request.getData("id") == null || request.getData("value") == null
+                                    || request.getData("period") == null) {
                                 response.setError("Invalid Credentials");
                                 response.setStatus(5010);
                             } else {
-                                user.getLoan(request.getData("id"),
-                                        Long.parseLong(request.getData("value")),
+                                user.getLoan(request.getData("id"), Long.parseLong(request.getData("value")),
                                         Integer.parseInt(request.getData("period")));
                                 response.setStatus(2010);
                             }
@@ -205,11 +207,9 @@ public class ServerHand implements Runnable {
                                 String type = request.getData("type");
                                 boolean i;
                                 if (type.equals("w")) {
-                                    i = user.withdraw(request.getData("id"),
-                                            Long.parseLong(request.getData("value")));
+                                    i = user.withdraw(request.getData("id"), Long.parseLong(request.getData("value")));
                                 } else if (type.equals("d")) {
-                                    i = user.deposit(request.getData("id"),
-                                            Long.parseLong(request.getData("value")));
+                                    i = user.deposit(request.getData("id"), Long.parseLong(request.getData("value")));
                                 } else
                                     i = false;
                                 if (i) {

@@ -41,15 +41,12 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import util.DataDealer;
 
-public class FrequentlyUsedAccount
-{
+public class FrequentlyUsedAccount {
     ArrayList<String> saveCard = new ArrayList<String>();
     ArrayList<String> saveAlias = new ArrayList<String>();
-    int i =0 ;
+    int i = 0;
 
-
-    public FrequentlyUsedAccount(Stage primaryStage)throws FileNotFoundException
-    {
+    public FrequentlyUsedAccount(Stage primaryStage) throws FileNotFoundException {
         Group root = new Group();
         Scene scene = new Scene(root);
 
@@ -69,7 +66,6 @@ public class FrequentlyUsedAccount
         txt.setFill(Color.WHITE);
         root.getChildren().add(txt);
 
-
         Rectangle rect = new Rectangle();
         rect.setHeight(300);
         rect.setWidth(250);
@@ -77,14 +73,12 @@ public class FrequentlyUsedAccount
         rect.setLayoutX(30);
         rect.setStroke(Color.BLACK);
         rect.setFill(Color.WHITE);
-        rect.setFill(new LinearGradient(
-                0, 0, 1, 1, true,                      //sizing
-                CycleMethod.NO_CYCLE,                  //cycling
-                new Stop(0, Color.web("#FFFFFF")),     //colors
-                new Stop(1, Color.web("#F5F5F5")))//  #ADD8E6
+        rect.setFill(new LinearGradient(0, 0, 1, 1, true, // sizing
+                CycleMethod.NO_CYCLE, // cycling
+                new Stop(0, Color.web("#FFFFFF")), // colors
+                new Stop(1, Color.web("#F5F5F5")))// #ADD8E6
         );
         root.getChildren().add(rect);
-
 
         Text text = new Text("selected card number:");
         text.setLayoutX(80);
@@ -92,29 +86,26 @@ public class FrequentlyUsedAccount
         text.setFill(Color.GRAY);
         root.getChildren().add(text);
 
-
         ChoiceBox scCard = new ChoiceBox();
-        scCard.setLayoutY(scCard.getLayoutY()+200);
+        scCard.setLayoutY(scCard.getLayoutY() + 200);
         scCard.setLayoutX(80);
-        scCard.setPadding(new Insets(0,0,0,0));
+        scCard.setPadding(new Insets(0, 0, 0, 0));
         root.getChildren().add(scCard);
         DataDealer d = new DataDealer(2);
         Client.ch.send(d);
         d = Client.ch.recieve();
-        if(d.getStatus() == 202){
+        if (d.getStatus() == 202) {
             String id = d.getData("0");
-            for (int i = 1; id != null ; i++) {
+            for (int i = 1; id != null; i++) {
                 scCard.getItems().add(id);
                 id = d.getData(String.valueOf(i));
             }
-        }
-        else{
+        } else {
             Alert a = new Alert(AlertType.WARNING);
             a.setTitle("Warning");
             a.setContentText(d.getError());
         }
-        //saveCard.add(scCard.get);
-
+        // saveCard.add(scCard.get);
 
         Text text2 = new Text("alias:");
         text2.setLayoutX(80);
@@ -124,19 +115,19 @@ public class FrequentlyUsedAccount
 
         TextField alias = new TextField();
         alias.setLayoutX(80);
-        alias.setLayoutY(scCard.getLayoutY()+50);
-        alias.setPadding(new Insets(3,10,10,3));
+        alias.setLayoutY(scCard.getLayoutY() + 50);
+        alias.setPadding(new Insets(3, 10, 10, 3));
         root.getChildren().add(alias);
         saveAlias.add(alias.getText());
-
 
         Button nxtAlias = new Button();
 
         InputStream input3 = new FileInputStream("./icons/alias.png");
         Image background3 = new Image(input3);
-        nxtAlias.setBackground(new Background(new BackgroundImage(background3 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        nxtAlias.setBackground(new Background(new BackgroundImage(background3, BackgroundRepeat.REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 
-        nxtAlias.setPadding(new Insets(10 , 30 , 10 , 40));
+        nxtAlias.setPadding(new Insets(10, 30, 10, 40));
         nxtAlias.setLayoutX(115);
         nxtAlias.setTranslateY(280);
         root.getChildren().add(nxtAlias);
@@ -145,108 +136,85 @@ public class FrequentlyUsedAccount
 
         InputStream input4 = new FileInputStream("./icons/show.png");
         Image background4 = new Image(input4);
-        show.setBackground(new Background(new BackgroundImage(background4 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        show.setBackground(new Background(new BackgroundImage(background4, BackgroundRepeat.REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 
-        show.setPadding(new Insets(10 , 30 , 10 , 40));
+        show.setPadding(new Insets(10, 30, 10, 40));
         show.setLayoutX(115);
         show.setTranslateY(310);
         root.getChildren().add(show);
 
-
-
         Button menu = new Button();
         InputStream input5 = new FileInputStream("./icons/mennu.png");
         Image background5 = new Image(input5);
-        menu.setBackground(new Background(new BackgroundImage(background5 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        menu.setPadding(new Insets(15,10,0,25));
+        menu.setBackground(new Background(new BackgroundImage(background5, BackgroundRepeat.REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        menu.setPadding(new Insets(15, 10, 0, 25));
         menu.setTranslateY(0);
         menu.setLayoutX(267);
         root.getChildren().add(menu);
-
 
         nxtAlias.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
 
-                if(alias.getText().isEmpty() || scCard.getItems().isEmpty())
-                {
-                    if(scCard.getItems().isEmpty())
-                    {
-                        scCard.setStyle("-fx-border-color: #800000;" +
-                                "    -fx-border-width: 1px;" +
-                                "    -fx-border-style: solid;");
+                if (alias.getText().isEmpty() || scCard.getItems().isEmpty()) {
+                    if (scCard.getItems().isEmpty()) {
+                        scCard.setStyle("-fx-border-color: #800000;" + "    -fx-border-width: 1px;"
+                                + "    -fx-border-style: solid;");
                     }
 
-
-                    if(alias.getText().isEmpty())
-                    {
-                        alias.setStyle("-fx-border-color: #800000;" +
-                                "    -fx-border-width: 1px;" +
-                                "    -fx-border-style: solid;");
+                    if (alias.getText().isEmpty()) {
+                        alias.setStyle("-fx-border-color: #800000;" + "    -fx-border-width: 1px;"
+                                + "    -fx-border-style: solid;");
                     }
 
-
-                  /*  if(scCard.getText().isEmpty())
-                    {
-                        scCard.setStyle("-fx-border-color: #800000;" +
-                                "    -fx-border-width: 1px;" +
-                                "    -fx-border-style: solid;");
-                    }
-
-                   */
-
+                    /*
+                     * if(scCard.getText().isEmpty()) { scCard.setStyle("-fx-border-color: #800000;"
+                     * + "    -fx-border-width: 1px;" + "    -fx-border-style: solid;"); }
+                     * 
+                     */
 
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("Warning");
                     alert.setHeaderText("Required Fields Empty");
-                    alert.setContentText("The fields highlighted in red must be filled "
-                            + "out.\nPlease try again.");
+                    alert.setContentText("The fields highlighted in red must be filled " + "out.\nPlease try again.");
                     alert.showAndWait();
 
-                    scCard.setStyle("-fx-border-color: #FFFAFA;" +
-                            "    -fx-border-width: 0px;" +
-                            "    -fx-border-style: solid;");
+                    scCard.setStyle("-fx-border-color: #FFFAFA;" + "    -fx-border-width: 0px;"
+                            + "    -fx-border-style: solid;");
 
-                    alias.setStyle("-fx-border-color: #FFFAFA;" +
-                            "    -fx-border-width: 0px;" +
-                            "    -fx-border-style: solid;");
+                    alias.setStyle("-fx-border-color: #FFFAFA;" + "    -fx-border-width: 0px;"
+                            + "    -fx-border-style: solid;");
+                } else {
+                    DataDealer req = new DataDealer(7);
+                    req.addData("id", (String) scCard.getValue());
+                    req.addData("alias", alias.getText());
+                    Client.ch.send(req);
+                    DataDealer res = Client.ch.recieve();
+                    if (res.getStatus() == 207) {
+                        Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                        alert2.setTitle("Saved!");
+                        alert2.setHeaderText("Alias added successfully");
+                        alert2.setContentText("You can see it in the 'show all' section");
+                        alert2.showAndWait();
+                    } else {
+                        Alert a = new Alert(AlertType.ERROR);
+                        a.setTitle("Error");
+                        a.setHeaderText("Error " + res.getStatus());
+                        a.setContentText(res.getError());
+                        a.showAndWait();
+                    }
                 }
-                else {
-
-
-                    TextField alias = new TextField();
-                    alias.setLayoutX(80);
-                    alias.setLayoutY(scCard.getLayoutY() + 50);
-                    alias.setPadding(new Insets(3, 10, 10, 3));
-                    root.getChildren().add(alias);
-
-                    TextField scCard = new TextField();
-                    scCard.setLayoutY(scCard.getLayoutY() + 200);
-                    scCard.setLayoutX(80);
-                    scCard.setPadding(new Insets(3, 10, 10, 3));
-                    root.getChildren().add(scCard);
-
-
-                    saveAlias.add(alias.getText());
-                    saveCard.add(scCard.getText());
-
-
-                    Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-                    alert2.setTitle("Saved!");
-                    alert2.setHeaderText("The desired card number was saved.");
-                    alert2.showAndWait();
-                }
-
 
             }
         });
-
 
         show.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
 
-               primaryStage.close();
+                primaryStage.close();
                 try {
                     ShowAlias sa = new ShowAlias(primaryStage);
                 } catch (FileNotFoundException e) {
@@ -266,10 +234,6 @@ public class FrequentlyUsedAccount
             }
         });
 
-
-
-
-
         primaryStage.setTitle("frequntly used account");
         primaryStage.setHeight(480);
         primaryStage.setWidth(320);
@@ -279,10 +243,9 @@ public class FrequentlyUsedAccount
 
         Text clock = new Text();
         DateFormat format = DateFormat.getInstance();
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1),new EventHandler<ActionEvent>() {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event)
-            {
+            public void handle(ActionEvent event) {
                 Calendar cal = Calendar.getInstance();
                 clock.setText(format.format(cal.getTime()));
                 clock.setFill(Color.BLACK);
@@ -292,8 +255,6 @@ public class FrequentlyUsedAccount
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
-
-
 
         VBox vx = new VBox(clock);
         vx.setLayoutX(90);

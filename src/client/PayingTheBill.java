@@ -109,7 +109,7 @@ public class PayingTheBill
         }
 
 
-        Text text2 = new Text("Billing code :");
+        Text text2 = new Text("Billing code(13 digits) :");
         text2.setLayoutX(80);
         text2.setLayoutY(240);
         text2.setFill(Color.GRAY);
@@ -122,7 +122,7 @@ public class PayingTheBill
         bId.setLayoutX(80);
         root.getChildren().add(bId);
 
-        Text text3 = new Text("Payment code :");
+        Text text3 = new Text("Payment code(8 digits) :");
         text3.setLayoutX(80);
         text3.setLayoutY(290);
         text3.setFill(Color.GRAY);
@@ -209,7 +209,7 @@ public class PayingTheBill
                     DataDealer req = new DataDealer(9);
                     req.addData("id", (String) scCard.getValue());
                     req.addData("code", bId.getText());
-                    req.addData("payCode", pCode.getText());
+                    req.addData("paycode", pCode.getText());
                     Client.ch.send(req);
                     DataDealer res = Client.ch.recieve();
                     if (res.getStatus() == 209) {

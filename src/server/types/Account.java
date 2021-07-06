@@ -173,7 +173,7 @@ public class Account implements Identifiable {
         if (code == null || payCode == null || code.length() != 13 || payCode.length() != 8)
             return false;
         balance -= (code.hashCode() + payCode.hashCode()) / 100;
-        new Transaction(getUniqueID() + tCount, (code.hashCode() + payCode.hashCode()) / 100,
+        new Transaction(getUniqueID() + tCount, (code.hashCode() + payCode.hashCode()) / 10000,
                 "pay Bill , code: " + code + " , payCode: " + payCode);
         tCount++;
         update();
