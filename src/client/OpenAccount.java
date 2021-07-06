@@ -106,7 +106,7 @@ public class OpenAccount
 
 
 
-        Text tx3 = new Text("Alias : ");
+        Text tx3 = new Text("Alias (Optional) : ");
         tx3.setLayoutX(80);
         tx3.setLayoutY(290);
         tx3.setFill(Color.BLACK);
