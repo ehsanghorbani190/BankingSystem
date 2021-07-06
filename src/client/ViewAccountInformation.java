@@ -105,7 +105,7 @@ public class ViewAccountInformation {
          * 
          */
 
-        Text selectCard = new Text("select card number : ");
+        Text selectCard = new Text("account:");
         selectCard.setLayoutX(80);
         selectCard.setLayoutY(130);
         root.getChildren().add(selectCard);
@@ -125,7 +125,7 @@ public class ViewAccountInformation {
             a.setTitle("Warning");
             a.setContentText(d.getError());
         }
-        chb.setLayoutX(200);
+        chb.setLayoutX(150);
         chb.setLayoutY(115);
 
         root.getChildren().add(chb);
@@ -179,7 +179,7 @@ public class ViewAccountInformation {
                 Client.ch.send(req);
                 DataDealer res = Client.ch.recieve();
                 if (res.getStatus() == 203) {
-                    aliasAmount.setText(res.getData("alias"));
+                    aliasAmount.setText((res.getData("alias") != null) ? res.getData("alias") : "No Alias is set");
                     inventoryAmount.setText(res.getData("balance"));
                 } else {
                     Alert a = new Alert(AlertType.ERROR);
@@ -207,7 +207,7 @@ public class ViewAccountInformation {
             public void handle(ActionEvent event) {
                 try {
                     primaryStage.close();
-                    ShowTransaction st = new ShowTransaction(primaryStage);
+                    ShowTransaction st = new ShowTransaction(primaryStage , (String) chb.getValue());
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
