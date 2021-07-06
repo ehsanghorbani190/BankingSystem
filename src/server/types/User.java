@@ -90,8 +90,8 @@ public class User implements Identifiable {
         return phone;
     }
 
-    public Account getAccount(int id) {
-        return Filer.<Account>read(getUniqueID() + id, Account.class);
+    public Account getAccount(String id) {
+        return Filer.<Account>read(id, Account.class);
     }
     // !SECTION
 
@@ -144,21 +144,21 @@ public class User implements Identifiable {
         return temp;
     }
 
-    public void deleteAccount(int id, String password, String toID) {
+    public void deleteAccount(String id, String password, String toID) {
         Account temp = getAccount(id);
         if (temp == null || !temp.login(password))
             return;
         temp.delete(password, toID);
     }
 
-    public void addAccountToFavorites(int id) {
+    public void addAccountToFavorites(String id) {
         Account temp = getAccount(id);
         if (temp == null)
             return;
         temp.setFavorite(true);
     }
 
-    public void addAliasTo(int id, String alias) {
+    public void addAliasTo(String id, String alias) {
         Account temp = getAccount(id);
         if (temp == null)
             return;
@@ -166,7 +166,7 @@ public class User implements Identifiable {
     }
 
     // !SECTION
-    public boolean transfer(int from, String password, String to, long val) {
+    public boolean transfer(String from, String password, String to, long val) {
         Account temp = getAccount(from);
         if (temp == null || !temp.login(password))
             return false;
@@ -174,28 +174,28 @@ public class User implements Identifiable {
 
     }
 
-    public boolean withdraw(int id, long val) {
+    public boolean withdraw(String id, long val) {
         Account temp = getAccount(id);
         if (temp == null)
             return false;
         return temp.getMoney(val);
     }
 
-    public boolean deposit(int id, long val) {
+    public boolean deposit(String id, long val) {
         Account temp = getAccount(id);
         if (temp == null)
             return false;
         return temp.addMoney(val);
     }
 
-    public boolean payBill(int id, String code, String payCode) {
+    public boolean payBill(String id, String code, String payCode) {
         Account temp = getAccount(id);
         if (temp == null)
             return false;
         return temp.payBill(code, payCode);
     }
 
-    public void getLoan(int id, long val, int periodInDays) {
+    public void getLoan(String id, long val, int periodInDays) {
         Account temp = getAccount(id);
         if (temp == null)
             return;

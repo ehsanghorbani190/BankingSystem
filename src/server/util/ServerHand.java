@@ -69,7 +69,7 @@ public class ServerHand implements Runnable {
                                 response.setStatus(5030);
                                 response.setError("Provide an ID");
                             } else {
-                                Account account = user.getAccount(Integer.parseInt(response.getData("id")));
+                                Account account = user.getAccount(response.getData("id"));
                                 if (account == null) {
                                     response.setStatus(5031);
                                     response.setError("no account found with this id");
@@ -96,7 +96,7 @@ public class ServerHand implements Runnable {
                                 response.setStatus(5050);
                                 response.setError("Provide an ID");
                             } else {
-                                Account account = user.getAccount(Integer.parseInt(response.getData("id")));
+                                Account account = user.getAccount(response.getData("id"));
                                 if (account == null) {
                                     response.setStatus(5051);
                                     response.setError("no account found with this id");
@@ -132,7 +132,7 @@ public class ServerHand implements Runnable {
                                 response.setError("Provide an ID");
                                 response.setStatus(5070);
                             } else {
-                                Account account = user.getAccount(Integer.parseInt(request.getData("id")));
+                                Account account = user.getAccount(request.getData("id"));
                                 if (account == null) {
                                     response.setStatus(5071);
                                     response.setError("No account found with provided ID");
@@ -148,7 +148,7 @@ public class ServerHand implements Runnable {
                                 response.setError("Invalid Credentials");
                                 response.setStatus(5080);
                             } else {
-                                boolean i = user.transfer(Integer.parseInt(request.getData("id")),
+                                boolean i = user.transfer(request.getData("id"),
                                         request.getData("password"), request.getData("dest"),
                                         Long.parseLong(request.getData("ueue")));
                                 if (i) {
@@ -164,7 +164,7 @@ public class ServerHand implements Runnable {
                                 response.setError("Provide an ID");
                                 response.setStatus(5090);
                             } else {
-                                boolean i = user.payBill(Integer.parseInt(request.getData("id")),
+                                boolean i = user.payBill(request.getData("id"),
                                         request.getData("code"), request.getData("paycode"));
                                 if (i) {
                                     response.setStatus(209);
@@ -179,7 +179,7 @@ public class ServerHand implements Runnable {
                                 response.setError("Provide an ID");
                                 response.setStatus(5010);
                             } else {
-                                user.getLoan(Integer.parseInt(request.getData("id")),
+                                user.getLoan(request.getData("id"),
                                         Long.parseLong(request.getData("ueue")),
                                         Integer.parseInt(request.getData("ueue")));
                                 response.setStatus(2010);
@@ -187,12 +187,12 @@ public class ServerHand implements Runnable {
                             break;
                         case 11:// NOTE 11 for Closing Account
                             if (request.getData("id") == null || request.getData("password") == null
-                                    || (user.getAccount(Integer.parseInt(request.getData("id"))).getBalance() != 0
+                                    || (user.getAccount(request.getData("id")).getBalance() != 0
                                             && request.getData("dest") == null)) {
                                 response.setError("Invalid Credentials");
                                 response.setStatus(5011);
                             } else {
-                                user.deleteAccount(Integer.parseInt(request.getData("id")), request.getData("password"),
+                                user.deleteAccount(request.getData("id"), request.getData("password"),
                                         request.getData("dest"));
                                 response.setStatus(2011);
                             }
@@ -205,10 +205,10 @@ public class ServerHand implements Runnable {
                                 String type = request.getData("type");
                                 boolean i;
                                 if (type.equals("w")) {
-                                    i = user.withdraw(Integer.parseInt(request.getData("id")),
+                                    i = user.withdraw(request.getData("id"),
                                             Long.parseLong(request.getData("value")));
                                 } else if (type.equals("d")) {
-                                    i = user.deposit(Integer.parseInt(request.getData("id")),
+                                    i = user.deposit(request.getData("id"),
                                             Long.parseLong(request.getData("value")));
                                 } else
                                     i = false;

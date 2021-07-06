@@ -14,6 +14,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
@@ -29,9 +31,13 @@ import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import util.DataDealer;
 
 public class ApplyForALoan
 {
@@ -113,11 +119,21 @@ public class ApplyForALoan
         ChoiceBox cb3 = new ChoiceBox();
         cb2.setLayoutX(170);
         cb2.setLayoutY(290);
-        cb2.getItems().add("1 DAY LATER");
-        cb2.getItems().add("2 DAY LATER");
-        cb2.getItems().add("3 DAY LATER");
-        cb2.getItems().add("4 DAY LATER");
-        cb2.getItems().add("5 DAY LATER");
+        DataDealer d = new DataDealer(2);
+        Client.ch.send(d);
+        d = Client.ch.recieve();
+        if(d.getStatus() == 202){
+            String id = d.getData("0");
+            for (int i = 1; id != null ; i++) {
+                cb3.getItems().add(id);
+                id = d.getData(String.valueOf(i));
+            }
+        }
+        else{
+            Alert a = new Alert(AlertType.WARNING);
+            a.setTitle("Warning");
+            a.setContentText(d.getError());
+        }
 
         // root.getChildren().add(cb2);
         // HBox  hb = new HBox(select,cb , select2, cb2);
