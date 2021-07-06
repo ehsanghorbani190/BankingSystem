@@ -6,3 +6,6 @@
 out/
 bank2.iml
 *.class
+Users/
+Accounts/
+Transactions/
