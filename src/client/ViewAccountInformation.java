@@ -1,6 +1,5 @@
 package client;
 
-import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -15,11 +14,19 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -30,8 +37,8 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import javafx.util.Duration;
+import util.DataDealer;
 
 public class ViewAccountInformation
 {
@@ -120,7 +127,21 @@ public class ViewAccountInformation
         root.getChildren().add(selectCard);
 
         ChoiceBox chb = new ChoiceBox();
-
+        DataDealer d = new DataDealer(2);
+        Client.ch.send(d);
+        d = Client.ch.recieve();
+        if(d.getStatus() == 202){
+            String id = d.getData("0");
+            for (int i = 1; id != null ; i++) {
+                chb.getItems().add(id);
+                id = d.getData(String.valueOf(i));
+            }
+        }
+        else{
+            Alert a = new Alert(AlertType.WARNING);
+            a.setTitle("Warning");
+            a.setContentText(d.getError());
+        }
         chb.setLayoutX(200);
         chb.setLayoutY(115);
 

@@ -203,7 +203,7 @@ public class OpenAccount {
                     DataDealer req = new DataDealer(6);
                     req.addData("password", passFl.getText());
                     req.addData("alias", setAlias.getText());
-                    if (setAlias.getText() == "") {
+                    if (setAlias.getText() == null) {
                         req.addData("fav", "false");
                     } else
                         req.addData("fav", "true");
