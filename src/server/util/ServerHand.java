@@ -96,7 +96,7 @@ public class ServerHand implements Runnable {
                                 response.setStatus(5050);
                                 response.setError("Provide an ID");
                             } else {
-                                Account account = user.getAccount(response.getData("id"));
+                                Account account = user.getAccount(request.getData("id"));
                                 if (account == null) {
                                     response.setStatus(5051);
                                     response.setError("no account found with this id");
