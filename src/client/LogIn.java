@@ -16,6 +16,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -35,51 +36,50 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import util.DataDealer;
 
 public class LogIn {
-
 
     LogIn(Stage primaryStage) throws FileNotFoundException {
         Group root = new Group();
 
-
         TextField usernamFl = new TextField();
-        usernamFl.setPromptText("username");
-        HBox usernameBx = new HBox( usernamFl);
-        usernameBx.setPadding(new Insets(10,10,10,10));
+        usernamFl.setPromptText("Melli Code");
+        HBox usernameBx = new HBox(usernamFl);
+        usernameBx.setPadding(new Insets(10, 10, 10, 10));
         usernameBx.setAlignment(Pos.BOTTOM_RIGHT);
-
 
         PasswordField passFl = new PasswordField();
 
         passFl.setPromptText("password");
-        HBox passBx = new HBox( passFl);
-        passBx.setPadding(new Insets(10,10,10,10));
+        HBox passBx = new HBox(passFl);
+        passBx.setPadding(new Insets(10, 10, 10, 10));
         passBx.setAlignment(Pos.CENTER);
 
         InputStream input = new FileInputStream("./icons/b2.png");
         Image background = new Image(input);
 
         Button bt = new Button();
-        bt.setBackground(new Background(new BackgroundImage(background , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,BackgroundSize.DEFAULT)));
-        bt.setPadding(new Insets(10,75,10,75));
+        bt.setBackground(new Background(new BackgroundImage(background, BackgroundRepeat.REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        bt.setPadding(new Insets(10, 75, 10, 75));
         bt.setTranslateY(30);
         bt.setTranslateX(5);
         bt.setFont(Font.font("T", FontWeight.LIGHT, FontPosture.ITALIC, 20));
         bt.setTextFill(Color.KHAKI);
 
-
         InputStream input3 = new FileInputStream("./icons/button4.png");
         Image background3 = new Image(input3);
         Button bt2 = new Button();
-        bt2.setBackground(new Background(new BackgroundImage(background3 , BackgroundRepeat.REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,BackgroundSize.DEFAULT)));
-        bt2.setPadding(new Insets(10,75,10,75));
+        bt2.setBackground(new Background(new BackgroundImage(background3, BackgroundRepeat.REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        bt2.setPadding(new Insets(10, 75, 10, 75));
         bt2.setTranslateY(30);
         bt2.setTranslateX(5);
         bt2.setFont(Font.font("T", FontWeight.LIGHT, FontPosture.ITALIC, 20));
         bt2.setTextFill(Color.KHAKI);
 
-        VBox vb = new VBox(usernameBx , passBx , bt , bt2);
+        VBox vb = new VBox(usernameBx, passBx, bt, bt2);
         vb.setLayoutX(80);
         vb.setLayoutY(204);
         vb.setSpacing(-3);
@@ -114,63 +114,65 @@ public class LogIn {
                 }
             }
         });
-        bt.setOnAction((ActionEvent e )-> {
+        bt.setOnAction((ActionEvent e) -> {
 
-
-            if  (usernamFl.getText().isEmpty() | passFl.getText().isEmpty() )
-            {
+            if (usernamFl.getText().isEmpty() | passFl.getText().isEmpty()) {
                 if (usernamFl.getText().isEmpty()) {
 
-                    usernamFl.setStyle("-fx-border-color: #800000;" +
-                            "    -fx-border-width: 1px;" +
-                            "    -fx-border-style: solid;");
+                    usernamFl.setStyle("-fx-border-color: #800000;" + "    -fx-border-width: 1px;"
+                            + "    -fx-border-style: solid;");
                 }
-                if(passFl.getText().isEmpty()) {
+                if (passFl.getText().isEmpty()) {
 
-                    passFl.setStyle("-fx-border-color: #800000;" +
-                            "    -fx-border-width: 1px;" +
-                            "    -fx-border-style: solid;");
+                    passFl.setStyle("-fx-border-color: #800000;" + "    -fx-border-width: 1px;"
+                            + "    -fx-border-style: solid;");
                 }
 
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Warning");
                 alert.setHeaderText("Required Fields Empty");
-                alert.setContentText("The fields highlighted in red must be filled "
-                        + "out.\nPlease try again.");
+                alert.setContentText("The fields highlighted in red must be filled " + "out.\nPlease try again.");
                 alert.showAndWait();
 
+                usernamFl.setStyle(
+                        "-fx-border-color: #FFFAFA;" + "    -fx-border-width: 0px;" + "    -fx-border-style: solid;");
 
-                usernamFl.setStyle("-fx-border-color: #FFFAFA;" +
-                        "    -fx-border-width: 0px;" +
-                        "    -fx-border-style: solid;");
-
-                passFl.setStyle("-fx-border-color: #FFFAFA;" +
-                        "    -fx-border-width: 0px;" +
-                        "    -fx-border-style: solid;");
+                passFl.setStyle(
+                        "-fx-border-color: #FFFAFA;" + "    -fx-border-width: 0px;" + "    -fx-border-style: solid;");
             }
 
-            else
-            {
+            else {
+                DataDealer req = new DataDealer(0);
+                req.addData("melliCode", usernamFl.getText());
+                req.addData("password", passFl.getText());
+                Client.ch.send(req);
+                DataDealer res = Client.ch.recieve();
+                if (res.getStatus() == 200) {
+                    primaryStage.close();
+                    try {
 
-                primaryStage.close();
-                 try {
+                        UserPanel up = new UserPanel(primaryStage);
 
-                     UserPanel up = new UserPanel(primaryStage);
-
-                     } catch (FileNotFoundException problem) {
-                         problem.printStackTrace();
+                    } catch (FileNotFoundException problem) {
+                        problem.printStackTrace();
                     }
+                }else{
+                    Alert a = new Alert(AlertType.ERROR);
+                    a.setTitle("Error");
+                    a.setHeaderText("Error "+ res.getStatus());
+                    a.setContentText(res.getError());
+                    a.showAndWait();
+                }
             }
         });
 
-    primaryStage.setTitle("login");
+        primaryStage.setTitle("login");
 
         Text clock = new Text();
         DateFormat format = DateFormat.getInstance();
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1),new EventHandler<ActionEvent>() {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event)
-            {
+            public void handle(ActionEvent event) {
                 Calendar cal = Calendar.getInstance();
                 clock.setText(format.format(cal.getTime()));
                 clock.setFill(Color.BLACK);
@@ -181,13 +183,10 @@ public class LogIn {
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
 
-
-
         VBox vx = new VBox(clock);
         vx.setLayoutX(100);
         vx.setLayoutY(20);
         root.getChildren().add(vx);
-
 
     }
 }
