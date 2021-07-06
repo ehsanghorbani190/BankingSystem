@@ -175,13 +175,13 @@ public class ServerHand implements Runnable {
                             }
                             break;
                         case 10:// NOTE 10 for Loan
-                            if (request.getData("id") == null) {
-                                response.setError("Provide an ID");
+                            if (request.getData("id") == null || request.getData("value") == null || request.getData("period") == null) {
+                                response.setError("Invalid Credentials");
                                 response.setStatus(5010);
                             } else {
                                 user.getLoan(request.getData("id"),
-                                        Long.parseLong(request.getData("ueue")),
-                                        Integer.parseInt(request.getData("ueue")));
+                                        Long.parseLong(request.getData("value")),
+                                        Integer.parseInt(request.getData("period")));
                                 response.setStatus(2010);
                             }
                             break;
